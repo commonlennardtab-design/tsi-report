@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TAB Research | TSI Weekly Reports</title>
+    <style>
+        :root {
+            --bg: #f3f5f7;
+            --card: #ffffff;
+            --text: #18293b;
+            --muted: #66788a;
+            --primary: #1f3b57;
+            --primary-dark: #162c42;
+            --border: #d8e0e8;
+            --shadow: 0 14px 35px rgba(16, 32, 52, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            background: linear-gradient(180deg, #eef2f5 0%, #f7f9fb 100%);
+            color: var(--text);
+        }
+
+        .page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .card {
+            width: 100%;
+            max-width: 980px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .hero {
+            padding: 48px 40px 36px;
+            background: linear-gradient(135deg, #ffffff 0%, #f5f8fb 100%);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            margin-bottom: 26px;
+        }
+
+        .logo-box {
+            width: 96px;
+            height: 96px;
+            border-radius: 18px;
+            background: #fff;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .logo-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 8px;
+        }
+
+        .eyebrow {
+            font-size: 13px;
+            letter-spacing: 1.6px;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 0 0 8px 0;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 46px;
+            line-height: 1.05;
+            letter-spacing: -1.2px;
+        }
+
+        .subtitle {
+            margin: 18px 0 0 0;
+            font-size: 18px;
+            line-height: 1.65;
+            color: var(--muted);
+            max-width: 760px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-top: 34px;
+        }
+
+        .stat {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 18px 20px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 10px;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--text);
+        }
+
+        .content {
+            padding: 36px 40px 44px;
+        }
+
+        .section-title {
+            margin: 0 0 10px 0;
+            font-size: 28px;
+            line-height: 1.15;
+        }
+
+        .section-text {
+            margin: 0 0 28px 0;
+            color: var(--muted);
+            font-size: 16px;
+            line-height: 1.7;
+            max-width: 760px;
+        }
+
+        .report-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .report-card {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 24px 22px;
+            transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+            box-shadow: 0 6px 18px rgba(15, 31, 50, 0.04);
+        }
+
+        .report-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 14px 28px rgba(15, 31, 50, 0.08);
+            border-color: #bcc9d6;
+        }
+
+        .report-tag {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--primary);
+            margin-bottom: 14px;
+        }
+
+        .report-name {
+            font-size: 26px;
+            font-weight: 800;
+            margin: 0 0 10px 0;
+            line-height: 1.15;
+        }
+
+        .report-desc {
+            margin: 0 0 20px 0;
+            color: var(--muted);
+            font-size: 15px;
+            line-height: 1.6;
+            min-height: 72px;
+        }
+
+        .report-link {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .archive-section {
+            margin-top: 42px;
+            padding-top: 10px;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer {
+            margin-top: 32px;
+            padding-top: 22px;
+            border-top: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 900px) {
+            h1 {
+                font-size: 38px;
+            }
+
+            .stats,
+            .report-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .hero,
+            .content {
+                padding: 28px 22px 30px;
+            }
+
+            .brand {
+                align-items: flex-start;
+            }
+
+            .logo-box {
+                width: 78px;
+                height: 78px;
+            }
+
+            h1 {
+                font-size: 32px;
+            }
+
+            .subtitle {
+                font-size: 16px;
+            }
+
+            .section-title {
+                font-size: 24px;
+            }
+
+            .report-name {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <main class="card">
+            <section class="hero">
+                <div class="brand">
+                    <div class="logo-box">
+                        <img src="TAB_Logo.png" alt="TAB Research Logo" />
+                    </div>
+                    <div>
+                        <p class="eyebrow">TAB Research</p>
+                        <h1>TSI Weekly Reports</h1>
+                    </div>
+                </div>
+
+                <p class="subtitle">
+                    Systematische Momentum-Strategien auf Basis relativer Stärke.
+                    Wöchentliche Research-Reports zu HDAX, Nasdaq 100 und S&amp;P 500
+                    mit Fokus auf Holdings, Rebalancing, Performance und Risiko.
+                </p>
+
+                <div class="stats">
+                    <div class="stat">
+                        <div class="stat-label">Fokus</div>
+                        <div class="stat-value">Momentum</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-label">Frequenz</div>
+                        <div class="stat-value">Wöchentlich</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-label">Märkte</div>
+                        <div class="stat-value">3 Universen</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content">
+                <h2 class="section-title">Verfügbare Reports</h2>
+                <p class="section-text">
+                    Wähle den gewünschten Marktbericht. Jeder Report enthält die aktuelle
+                    Strategieübersicht, Veränderungen zum letzten Rebalancing sowie einen
+                    kompakten Risk-/Return-Snapshot gegenüber dem jeweiligen Benchmark.
+                </p>
+
+                <div class="report-grid">
+                    <a class="report-card" href="hdax.html">
+                        <span class="report-tag">Deutschland</span>
+                        <h3 class="report-name">HDAX</h3>
+                        <p class="report-desc">
+                            Wöchentlicher Report zur TSI-Rotation im HDAX mit Holdings,
+                            Rebalancing-Entscheidungen und Performancevergleich.
+                        </p>
+                        <span class="report-link">Report öffnen →</span>
+                    </a>
+
+                    <a class="report-card" href="ndq100.html">
+                        <span class="report-tag">USA</span>
+                        <h3 class="report-name">Nasdaq 100</h3>
+                        <p class="report-desc">
+                            Fokus auf die stärksten Technologie- und Wachstumswerte mit
+                            systematischer Selektion nach relativer Stärke.
+                        </p>
+                        <span class="report-link">Report öffnen →</span>
+                    </a>
+
+                    <a class="report-card" href="sp500.html">
+                        <span class="report-tag">USA</span>
+                        <h3 class="report-name">S&amp;P 500</h3>
+                        <p class="report-desc">
+                            Breiter Marktansatz für Large Caps mit klarer Übersicht zu
+                            Strategie, Benchmark und aktueller Positionierung.
+                        </p>
+                        <span class="report-link">Report öffnen →</span>
+                    </a>
+                </div>
+
+                <section class="archive-section">
+                    <h2 class="section-title">Vergangene Reports</h2>
+                    <p class="section-text">
+                        Hier finden Sie die Reports der letzten Woche zur Nachverfolgung
+                        der Strategieentwicklung und zum Vergleich mit der aktuellen Ausgabe.
+                    </p>
+
+                    <div class="report-grid">
+                        <a class="report-card" id="archive-hdax" href="_archive/hdax_KW_1.html">
+                            <span class="report-tag">Deutschland</span>
+                            <h3 class="report-name" id="archive-hdax-title">HDAX (KW 1)</h3>
+                            <p class="report-desc">
+                                Analyse der Vorwoche inklusive Holdings, Rebalancing und Performance.
+                            </p>
+                            <span class="report-link" id="archive-hdax-link">Report der Vorwoche öffnen →</span>
+                        </a>
+
+                        <a class="report-card" id="archive-ndq100" href="_archive/ndq100_KW_1.html">
+                            <span class="report-tag">USA</span>
+                            <h3 class="report-name" id="archive-ndq100-title">Nasdaq 100 (KW 1)</h3>
+                            <p class="report-desc">
+                                Vergleich der Strategieentwicklung zur aktuellen Woche im Nasdaq 100.
+                            </p>
+                            <span class="report-link" id="archive-ndq100-link">Report der Vorwoche öffnen →</span>
+                        </a>
+
+                        <a class="report-card" id="archive-sp500" href="_archive/sp500_KW_1.html">
+                            <span class="report-tag">USA</span>
+                            <h3 class="report-name" id="archive-sp500-title">S&amp;P 500 (KW 1)</h3>
+                            <p class="report-desc">
+                                Überblick über die vorherige Portfolio-Zusammensetzung und Performance.
+                            </p>
+                            <span class="report-link" id="archive-sp500-link">Report der Vorwoche öffnen →</span>
+                        </a>
+                    </div>
+                </section>
+
+                <div class="footer">
+                    TAB Research – Quantitative Strategien, Marktanalyse und systematische
+                    Aktienselektion.
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        function getISOWeek(date) {
+            const tmp = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+            const dayNum = tmp.getUTCDay() || 7;
+            tmp.setUTCDate(tmp.getUTCDate() + 4 - dayNum);
+            const yearStart = new Date(Date.UTC(tmp.getUTCFullYear(), 0, 1));
+            return Math.ceil((((tmp - yearStart) / 86400000) + 1) / 7);
+        }
+
+        function getPreviousISOWeekInfo() {
+            const today = new Date();
+            const lastWeekDate = new Date(today);
+            lastWeekDate.setDate(today.getDate() - 7);
+
+            const week = getISOWeek(lastWeekDate);
+            const year = lastWeekDate.getFullYear();
+
+            return { week, year };
+        }
+
+        function updateArchiveLinks() {
+            const prev = getPreviousISOWeekInfo();
+            const weekLabel = `KW ${prev.week}`;
+
+            const hdaxHref = `_archive/hdax_KW_${prev.week}.html`;
+            const ndqHref = `_archive/ndq100_KW_${prev.week}.html`;
+            const sp500Href = `_archive/sp500_KW_${prev.week}.html`;
+
+            const hdaxCard = document.getElementById("archive-hdax");
+            const ndqCard = document.getElementById("archive-ndq100");
+            const sp500Card = document.getElementById("archive-sp500");
+
+            const hdaxTitle = document.getElementById("archive-hdax-title");
+            const ndqTitle = document.getElementById("archive-ndq100-title");
+            const sp500Title = document.getElementById("archive-sp500-title");
+
+            if (hdaxCard) hdaxCard.href = hdaxHref;
+            if (ndqCard) ndqCard.href = ndqHref;
+            if (sp500Card) sp500Card.href = sp500Href;
+
+            if (hdaxTitle) hdaxTitle.textContent = `HDAX (${weekLabel})`;
+            if (ndqTitle) ndqTitle.textContent = `Nasdaq 100 (${weekLabel})`;
+            if (sp500Title) sp500Title.textContent = `S&P 500 (${weekLabel})`;
+        }
+
+        updateArchiveLinks();
+    </script>
+</body>
+</html>
