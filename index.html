@@ -14,10 +14,15 @@
             --primary-dark: #162c42;
             --border: #d8e0e8;
             --shadow: 0 14px 35px rgba(16, 32, 52, 0.08);
+            --shadow-sm: 0 6px 18px rgba(15, 31, 50, 0.04);
         }
 
         * {
             box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
@@ -37,7 +42,7 @@
 
         .card {
             width: 100%;
-            max-width: 980px;
+            max-width: 1180px;
             background: var(--card);
             border: 1px solid var(--border);
             border-radius: 24px;
@@ -99,12 +104,12 @@
             font-size: 18px;
             line-height: 1.65;
             color: var(--muted);
-            max-width: 760px;
+            max-width: 820px;
         }
 
         .stats {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 18px;
             margin-top: 34px;
         }
@@ -126,7 +131,7 @@
         }
 
         .stat-value {
-            font-size: 28px;
+            font-size: 24px;
             font-weight: 800;
             color: var(--text);
         }
@@ -137,7 +142,7 @@
 
         .section-title {
             margin: 0 0 10px 0;
-            font-size: 28px;
+            font-size: 30px;
             line-height: 1.15;
         }
 
@@ -146,7 +151,7 @@
             color: var(--muted);
             font-size: 16px;
             line-height: 1.7;
-            max-width: 760px;
+            max-width: 820px;
         }
 
         .report-grid {
@@ -164,13 +169,17 @@
             border-radius: 20px;
             padding: 24px 22px;
             transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
-            box-shadow: 0 6px 18px rgba(15, 31, 50, 0.04);
+            box-shadow: var(--shadow-sm);
         }
 
         .report-card:hover {
             transform: translateY(-3px);
             box-shadow: 0 14px 28px rgba(15, 31, 50, 0.08);
             border-color: #bcc9d6;
+        }
+
+        .current-card {
+            min-height: 240px;
         }
 
         .report-tag {
@@ -180,7 +189,13 @@
             letter-spacing: 1px;
             text-transform: uppercase;
             color: var(--primary);
-            margin-bottom: 14px;
+            margin-bottom: 12px;
+        }
+
+        .report-meta {
+            font-size: 13px;
+            color: var(--muted);
+            margin-bottom: 10px;
         }
 
         .report-name {
@@ -206,8 +221,71 @@
 
         .archive-section {
             margin-top: 42px;
-            padding-top: 10px;
+            padding-top: 8px;
             border-top: 1px solid var(--border);
+        }
+
+        .archive-market-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .archive-market-card {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 22px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .archive-market-title {
+            font-size: 24px;
+            margin: 0 0 8px 0;
+        }
+
+        .archive-market-desc {
+            margin: 0 0 16px 0;
+            color: var(--muted);
+            font-size: 15px;
+            line-height: 1.55;
+            min-height: 70px;
+        }
+
+        .archive-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .archive-item {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            text-decoration: none;
+            color: inherit;
+            border: 1px solid var(--border);
+            background: #f8fafc;
+            padding: 12px 14px;
+            border-radius: 14px;
+            transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+        }
+
+        .archive-item:hover {
+            background: #f1f6fb;
+            border-color: #bcc9d6;
+            transform: translateY(-1px);
+        }
+
+        .archive-week {
+            font-weight: 700;
+            color: var(--primary-dark);
+        }
+
+        .archive-time {
+            font-size: 13px;
+            color: var(--muted);
+            text-align: right;
         }
 
         .footer {
@@ -217,15 +295,19 @@
             color: var(--muted);
             font-size: 14px;
             line-height: 1.6;
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
         }
 
-        @media (max-width: 900px) {
-            h1 {
-                font-size: 38px;
+        @media (max-width: 1050px) {
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
             }
 
-            .stats,
-            .report-grid {
+            .report-grid,
+            .archive-market-grid {
                 grid-template-columns: 1fr;
             }
         }
@@ -257,8 +339,22 @@
                 font-size: 24px;
             }
 
-            .report-name {
+            .report-name,
+            .archive-market-title {
                 font-size: 22px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .archive-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .archive-time {
+                text-align: left;
             }
         }
     </style>
@@ -294,92 +390,61 @@
                     </div>
                     <div class="stat">
                         <div class="stat-label">Märkte</div>
-                        <div class="stat-value">3 Universen</div>
+                        <div class="stat-value">3</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-label">Update</div>
+                        <div class="stat-value">2026-03-18</div>
                     </div>
                 </div>
             </section>
 
             <section class="content">
-                <h2 class="section-title">Verfügbare Reports</h2>
+                <h2 class="section-title">Aktuelle Reports</h2>
                 <p class="section-text">
-                    Wähle den gewünschten Marktbericht. Jeder Report enthält die aktuelle
-                    Strategieübersicht, Veränderungen zum letzten Rebalancing sowie einen
-                    kompakten Risk-/Return-Snapshot gegenüber dem jeweiligen Benchmark.
+                    Jeder Report enthält die aktuelle Strategieübersicht, Veränderungen
+                    zum letzten Rebalancing sowie einen kompakten Risk-/Return-Snapshot
+                    gegenüber dem jeweiligen Benchmark.
                 </p>
 
                 <div class="report-grid">
 
-                    <a class="report-card" href="hdax.html">
+                    <a class="report-card current-card" href="hdax.html">
                         <span class="report-tag">Deutschland</span>
+                        <div class="report-meta">KW 11 · 2026-03-13</div>
                         <h3 class="report-name">HDAX</h3>
                         <p class="report-desc">
                             Wöchentlicher Report zur TSI-Rotation im HDAX mit Holdings, Rebalancing-Entscheidungen und Performancevergleich.
                         </p>
-                        <span class="report-link">Report öffnen →</span>
+                        <span class="report-link">Aktuellen Report öffnen →</span>
                     </a>
 
-                    <a class="report-card" href="ndq100.html">
+                    <a class="report-card current-card" href="ndq100.html">
                         <span class="report-tag">USA</span>
+                        <div class="report-meta">KW 11 · 2026-03-13</div>
                         <h3 class="report-name">Nasdaq 100</h3>
                         <p class="report-desc">
                             Fokus auf die stärksten Technologie- und Wachstumswerte mit systematischer Selektion nach relativer Stärke.
                         </p>
-                        <span class="report-link">Report öffnen →</span>
+                        <span class="report-link">Aktuellen Report öffnen →</span>
                     </a>
 
-                    <a class="report-card" href="sp500.html">
+                    <a class="report-card current-card" href="sp500.html">
                         <span class="report-tag">USA</span>
+                        <div class="report-meta">KW 11 · 2026-03-13</div>
                         <h3 class="report-name">S&amp;P 500</h3>
                         <p class="report-desc">
                             Breiter Marktansatz für Large Caps mit klarer Übersicht zu Strategie, Benchmark und aktueller Positionierung.
                         </p>
-                        <span class="report-link">Report öffnen →</span>
+                        <span class="report-link">Aktuellen Report öffnen →</span>
                     </a>
                 </div>
 
 
-                <section class="archive-section">
-                    <h2 class="section-title">Vergangene Reports</h2>
-                    <p class="section-text">
-                        Hier finden Sie die Reports der letzten Woche zur Nachverfolgung
-                        der Strategieentwicklung und zum Vergleich mit der aktuellen Ausgabe.
-                    </p>
-
-                    <div class="report-grid">
-
-                    <a class="report-card" href="_archive/hdax_KW_10_20260318_121100.html">
-                        <span class="report-tag">Deutschland</span>
-                        <h3 class="report-name">HDAX (KW 10)</h3>
-                        <p class="report-desc">
-                            Analyse der Vorwoche inklusive Holdings, Rebalancing und Performance.
-                        </p>
-                        <span class="report-link">Report der Vorwoche öffnen →</span>
-                    </a>
-
-                    <a class="report-card" href="_archive/ndq100_KW_10_20260318_121100.html">
-                        <span class="report-tag">USA</span>
-                        <h3 class="report-name">Nasdaq 100 (KW 10)</h3>
-                        <p class="report-desc">
-                            Vergleich der Strategieentwicklung zur aktuellen Woche im Nasdaq 100.
-                        </p>
-                        <span class="report-link">Report der Vorwoche öffnen →</span>
-                    </a>
-
-                    <a class="report-card" href="_archive/sp500_KW_10_20260318_121100.html">
-                        <span class="report-tag">USA</span>
-                        <h3 class="report-name">S&amp;P 500 (KW 10)</h3>
-                        <p class="report-desc">
-                            Überblick über die vorherige Portfolio-Zusammensetzung und Performance.
-                        </p>
-                        <span class="report-link">Report der Vorwoche öffnen →</span>
-                    </a>
-                    </div>
-                </section>
-        
 
                 <div class="footer">
-                    TAB Research – Quantitative Strategien, Marktanalyse und systematische
-                    Aktienselektion.
+                    <div>TAB Research – Quantitative Strategien, Marktanalyse und systematische Aktienselektion.</div>
+                    <div>Generiert am 2026-03-18 16:08:29</div>
                 </div>
             </section>
         </main>
