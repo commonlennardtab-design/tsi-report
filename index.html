@@ -308,12 +308,12 @@
                 </p>
 
                 <div class="report-grid">
+
                     <a class="report-card" href="hdax.html">
                         <span class="report-tag">Deutschland</span>
                         <h3 class="report-name">HDAX</h3>
                         <p class="report-desc">
-                            Wöchentlicher Report zur TSI-Rotation im HDAX mit Holdings,
-                            Rebalancing-Entscheidungen und Performancevergleich.
+                            Wöchentlicher Report zur TSI-Rotation im HDAX mit Holdings, Rebalancing-Entscheidungen und Performancevergleich.
                         </p>
                         <span class="report-link">Report öffnen →</span>
                     </a>
@@ -322,8 +322,7 @@
                         <span class="report-tag">USA</span>
                         <h3 class="report-name">Nasdaq 100</h3>
                         <p class="report-desc">
-                            Fokus auf die stärksten Technologie- und Wachstumswerte mit
-                            systematischer Selektion nach relativer Stärke.
+                            Fokus auf die stärksten Technologie- und Wachstumswerte mit systematischer Selektion nach relativer Stärke.
                         </p>
                         <span class="report-link">Report öffnen →</span>
                     </a>
@@ -332,12 +331,12 @@
                         <span class="report-tag">USA</span>
                         <h3 class="report-name">S&amp;P 500</h3>
                         <p class="report-desc">
-                            Breiter Marktansatz für Large Caps mit klarer Übersicht zu
-                            Strategie, Benchmark und aktueller Positionierung.
+                            Breiter Marktansatz für Large Caps mit klarer Übersicht zu Strategie, Benchmark und aktueller Positionierung.
                         </p>
                         <span class="report-link">Report öffnen →</span>
                     </a>
                 </div>
+
 
                 <section class="archive-section">
                     <h2 class="section-title">Vergangene Reports</h2>
@@ -347,34 +346,36 @@
                     </p>
 
                     <div class="report-grid">
-                        <a class="report-card" id="archive-hdax" href="_archive/hdax_KW_1.html">
-                            <span class="report-tag">Deutschland</span>
-                            <h3 class="report-name" id="archive-hdax-title">HDAX (KW 1)</h3>
-                            <p class="report-desc">
-                                Analyse der Vorwoche inklusive Holdings, Rebalancing und Performance.
-                            </p>
-                            <span class="report-link" id="archive-hdax-link">Report der Vorwoche öffnen →</span>
-                        </a>
 
-                        <a class="report-card" id="archive-ndq100" href="_archive/ndq100_KW_1.html">
-                            <span class="report-tag">USA</span>
-                            <h3 class="report-name" id="archive-ndq100-title">Nasdaq 100 (KW 1)</h3>
-                            <p class="report-desc">
-                                Vergleich der Strategieentwicklung zur aktuellen Woche im Nasdaq 100.
-                            </p>
-                            <span class="report-link" id="archive-ndq100-link">Report der Vorwoche öffnen →</span>
-                        </a>
+                    <a class="report-card" href="_archive/hdax_KW_10_20260318_120828.html">
+                        <span class="report-tag">Deutschland</span>
+                        <h3 class="report-name">HDAX (KW 10)</h3>
+                        <p class="report-desc">
+                            Analyse der Vorwoche inklusive Holdings, Rebalancing und Performance.
+                        </p>
+                        <span class="report-link">Report der Vorwoche öffnen →</span>
+                    </a>
 
-                        <a class="report-card" id="archive-sp500" href="_archive/sp500_KW_1.html">
-                            <span class="report-tag">USA</span>
-                            <h3 class="report-name" id="archive-sp500-title">S&amp;P 500 (KW 1)</h3>
-                            <p class="report-desc">
-                                Überblick über die vorherige Portfolio-Zusammensetzung und Performance.
-                            </p>
-                            <span class="report-link" id="archive-sp500-link">Report der Vorwoche öffnen →</span>
-                        </a>
+                    <a class="report-card" href="_archive/ndq100_KW_10_20260318_120828.html">
+                        <span class="report-tag">USA</span>
+                        <h3 class="report-name">Nasdaq 100 (KW 10)</h3>
+                        <p class="report-desc">
+                            Vergleich der Strategieentwicklung zur aktuellen Woche im Nasdaq 100.
+                        </p>
+                        <span class="report-link">Report der Vorwoche öffnen →</span>
+                    </a>
+
+                    <a class="report-card" href="_archive/sp500_KW_10_20260318_120828.html">
+                        <span class="report-tag">USA</span>
+                        <h3 class="report-name">S&amp;P 500 (KW 10)</h3>
+                        <p class="report-desc">
+                            Überblick über die vorherige Portfolio-Zusammensetzung und Performance.
+                        </p>
+                        <span class="report-link">Report der Vorwoche öffnen →</span>
+                    </a>
                     </div>
                 </section>
+        
 
                 <div class="footer">
                     TAB Research – Quantitative Strategien, Marktanalyse und systematische
@@ -383,53 +384,5 @@
             </section>
         </main>
     </div>
-
-    <script>
-        function getISOWeek(date) {
-            const tmp = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
-            const dayNum = tmp.getUTCDay() || 7;
-            tmp.setUTCDate(tmp.getUTCDate() + 4 - dayNum);
-            const yearStart = new Date(Date.UTC(tmp.getUTCFullYear(), 0, 1));
-            return Math.ceil((((tmp - yearStart) / 86400000) + 1) / 7);
-        }
-
-        function getPreviousISOWeekInfo() {
-            const today = new Date();
-            const lastWeekDate = new Date(today);
-            lastWeekDate.setDate(today.getDate() - 7);
-
-            const week = getISOWeek(lastWeekDate);
-            const year = lastWeekDate.getFullYear();
-
-            return { week, year };
-        }
-
-        function updateArchiveLinks() {
-            const prev = getPreviousISOWeekInfo();
-            const weekLabel = `KW ${prev.week}`;
-
-            const hdaxHref = `_archive/hdax_KW_${prev.week}.html`;
-            const ndqHref = `_archive/ndq100_KW_${prev.week}.html`;
-            const sp500Href = `_archive/sp500_KW_${prev.week}.html`;
-
-            const hdaxCard = document.getElementById("archive-hdax");
-            const ndqCard = document.getElementById("archive-ndq100");
-            const sp500Card = document.getElementById("archive-sp500");
-
-            const hdaxTitle = document.getElementById("archive-hdax-title");
-            const ndqTitle = document.getElementById("archive-ndq100-title");
-            const sp500Title = document.getElementById("archive-sp500-title");
-
-            if (hdaxCard) hdaxCard.href = hdaxHref;
-            if (ndqCard) ndqCard.href = ndqHref;
-            if (sp500Card) sp500Card.href = sp500Href;
-
-            if (hdaxTitle) hdaxTitle.textContent = `HDAX (${weekLabel})`;
-            if (ndqTitle) ndqTitle.textContent = `Nasdaq 100 (${weekLabel})`;
-            if (sp500Title) sp500Title.textContent = `S&P 500 (${weekLabel})`;
-        }
-
-        updateArchiveLinks();
-    </script>
 </body>
 </html>
