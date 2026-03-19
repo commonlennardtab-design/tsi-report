@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-19 18:30:17",
+  "generated_at": "2026-03-19 18:32:18",
   "reports": [
     {
       "label": "Nasdaq 100",
@@ -10,9 +10,9 @@
       "archive_prefix": "ndq100",
       "archive_items": [
         {
-          "file_name": "ndq100_KW11-03-09.html",
+          "file_name": "ndq100_KW_11_2026-03-09.html",
           "week": 11,
-          "monday_date": null
+          "monday_date": "09.03.2026"
         }
       ]
     },
