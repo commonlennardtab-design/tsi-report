@@ -1,18 +1,18 @@
 {
-  "generated_at": "2026-03-19 18:27:32",
+  "generated_at": "2026-03-19 18:28:40",
   "reports": [
     {
       "label": "Nasdaq 100",
       "region": "USA",
       "target_name": "ndq100.html",
       "source_week": 12,
-      "source_date": "2026-03-13",
+      "source_date": "16.03.2026",
       "archive_prefix": "ndq100",
       "archive_items": [
         {
           "file_name": "ndq100_KW11-03_09.html",
           "week": 11,
-          "modified_at": "2026-03-18 22:26"
+          "monday_date": null
         }
       ]
     },
@@ -21,13 +21,13 @@
       "region": "USA",
       "target_name": "sp500.html",
       "source_week": 12,
-      "source_date": "2026-03-13",
+      "source_date": "16.03.2026",
       "archive_prefix": "sp500",
       "archive_items": [
         {
           "file_name": "sp500_KW_11_2026-03-09.html",
           "week": 11,
-          "modified_at": "2026-03-18 22:19"
+          "monday_date": "09.03.2026"
         }
       ]
     },
@@ -36,13 +36,13 @@
       "region": "Deutschland",
       "target_name": "hdax.html",
       "source_week": 12,
-      "source_date": "2026-03-13",
+      "source_date": "16.03.2026",
       "archive_prefix": "hdax",
       "archive_items": [
         {
           "file_name": "hdax_KW_11_2026-03-09.html",
           "week": 11,
-          "modified_at": "2026-03-18 22:27"
+          "monday_date": "09.03.2026"
         }
       ]
     }
