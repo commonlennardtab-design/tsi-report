@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-19 18:12:07",
+  "generated_at": "2026-03-19 18:16:29",
   "reports": [
     {
       "label": "Nasdaq 100",
@@ -25,10 +25,15 @@
       "label": "S&P 500",
       "region": "USA",
       "target_name": "sp500.html",
-      "source_week": 11,
+      "source_week": 12,
       "source_date": "2026-03-13",
       "archive_prefix": "sp500",
       "archive_items": [
+        {
+          "file_name": "sp500_KW_11.html",
+          "week": 11,
+          "modified_at": "2026-03-18 22:19"
+        },
         {
           "file_name": "sp500_KW_10__20260318_222739.html",
           "week": 10,
