@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-20 23:35:01",
+  "generated_at": "2026-03-23 14:19:35",
   "reports": [
     {
       "label": "Nasdaq 100",
@@ -13,11 +13,6 @@
           "file_name": "ndq100_KW_12_2026-03-16.html",
           "week": 12,
           "monday_date": "16.03.2026"
-        },
-        {
-          "file_name": "ndq100_KW_11_2026-03-09.html",
-          "week": 11,
-          "monday_date": "09.03.2026"
         }
       ]
     },
@@ -33,11 +28,6 @@
           "file_name": "sp500_KW_12_2026-03-16.html",
           "week": 12,
           "monday_date": "16.03.2026"
-        },
-        {
-          "file_name": "sp500_KW_11_2026-03-09.html",
-          "week": 11,
-          "monday_date": "09.03.2026"
         }
       ]
     },
@@ -53,11 +43,6 @@
           "file_name": "hdax_KW_12_2026-03-16.html",
           "week": 12,
           "monday_date": "16.03.2026"
-        },
-        {
-          "file_name": "hdax_KW_11_2026-03-09.html",
-          "week": 11,
-          "monday_date": "09.03.2026"
         }
       ]
     }
