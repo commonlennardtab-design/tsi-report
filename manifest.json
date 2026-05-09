@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-09 13:47:33",
+  "generated_at": "2026-05-09 15:54:05",
   "reports": [
     {
       "label": "Nasdaq 100",
@@ -10,6 +10,11 @@
       "archive_prefix": "ndq100",
       "archive_items": [
         {
+          "file_name": "ndq100_KW_19_2026-05-04__20260509_155405.html",
+          "week": 19,
+          "monday_date": "04.05.2026"
+        },
+        {
           "file_name": "ndq100_KW_19_2026-05-04.html",
           "week": 19,
           "monday_date": "04.05.2026"
@@ -18,11 +23,6 @@
           "file_name": "ndq100_KW_18_2026-04-27.html",
           "week": 18,
           "monday_date": "27.04.2026"
-        },
-        {
-          "file_name": "ndq100_KW_17_2026-04-20.html",
-          "week": 17,
-          "monday_date": "20.04.2026"
         }
       ]
     },
@@ -35,6 +35,11 @@
       "archive_prefix": "sp500",
       "archive_items": [
         {
+          "file_name": "sp500_KW_19_2026-05-04__20260509_155405.html",
+          "week": 19,
+          "monday_date": "04.05.2026"
+        },
+        {
           "file_name": "sp500_KW_19_2026-05-04.html",
           "week": 19,
           "monday_date": "04.05.2026"
@@ -43,11 +48,6 @@
           "file_name": "sp500_KW_18_2026-04-27.html",
           "week": 18,
           "monday_date": "27.04.2026"
-        },
-        {
-          "file_name": "sp500_KW_17_2026-04-20.html",
-          "week": 17,
-          "monday_date": "20.04.2026"
         }
       ]
     },
@@ -60,6 +60,11 @@
       "archive_prefix": "hdax",
       "archive_items": [
         {
+          "file_name": "hdax_KW_19_2026-05-04__20260509_155405.html",
+          "week": 19,
+          "monday_date": "04.05.2026"
+        },
+        {
           "file_name": "hdax_KW_19_2026-05-04.html",
           "week": 19,
           "monday_date": "04.05.2026"
@@ -68,11 +73,6 @@
           "file_name": "hdax_KW_18_2026-04-27.html",
           "week": 18,
           "monday_date": "27.04.2026"
-        },
-        {
-          "file_name": "hdax_KW_17_2026-04-20.html",
-          "week": 17,
-          "monday_date": "20.04.2026"
         }
       ]
     }
