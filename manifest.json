@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-23 14:04:47",
+  "generated_at": "2026-05-23 14:27:17",
   "reports": [
     {
       "label": "Nasdaq 100",
@@ -60,6 +60,11 @@
       "archive_prefix": "hdax",
       "archive_items": [
         {
+          "file_name": "hdax_KW_21_2026-05-18__20260523_142717.html",
+          "week": 21,
+          "monday_date": "18.05.2026"
+        },
+        {
           "file_name": "hdax_KW_21_2026-05-18__20260523_140447.html",
           "week": 21,
           "monday_date": "18.05.2026"
@@ -68,11 +73,6 @@
           "file_name": "hdax_KW_21_2026-05-18.html",
           "week": 21,
           "monday_date": "18.05.2026"
-        },
-        {
-          "file_name": "hdax_KW_20_2026-05-11.html",
-          "week": 20,
-          "monday_date": "11.05.2026"
         }
       ]
     }
