@@ -325,6 +325,13 @@
       font-size: 13px;
     }
 
+    .metric-footnote {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.35;
+    }
+
     .detail-header {
       display: flex;
       align-items: end;
@@ -638,25 +645,25 @@
         <section class="metrics-grid">
           <div class="metric-card good"><div class="metric-label">Weekly Return</div><div class="metric-value">4.8%</div><div class="metric-sub">aktuellste Modellwoche</div></div>
           <div class="metric-card good"><div class="metric-label">Relativ vs S&amp;P 500</div><div class="metric-value">+3.4%</div><div class="metric-sub">benchmark-relative Wochenentwicklung</div></div>
-          <div class="metric-card default"><div class="metric-label">Max Drawdown</div><div class="metric-value">-44.3%</div><div class="metric-sub">modellbezogenes Risikomaß</div></div>
-          <div class="metric-card default"><div class="metric-label">Sharpe</div><div class="metric-value">1.98</div><div class="metric-sub">annualisiert, falls ableitbar</div></div>
+          <div class="metric-card default"><div class="metric-label">Max Drawdown</div><div class="metric-value">-15.3%</div><div class="metric-sub">letzte 6 Monate</div></div>
+          <div class="metric-card default"><div class="metric-label">Sharpe</div><div class="metric-value">4.09</div><div class="metric-sub">annualisiert, letzte 6 Monate</div></div>
           <div class="metric-card good"><div class="metric-label">YTD Return</div><div class="metric-value">90.0%</div><div class="metric-sub">Modell seit Jahresbeginn</div></div>
         </section>
 
         <section class="split-2">
           <div class="card perf-card">
-            <div class="eyebrow">Performance</div>
+            <div class="eyebrow">Performance(letzte 6 Monate)</div>
             <h2 class="section-title">Trendstärke-Modell vs S&P 500</h2>
             <div class="chart-wrap">
     <div class="linechart-legend"><div class="legend-item"><span class="legend-line portfolio"></span><span>Modell</span></div><div class="legend-item"><span class="legend-line benchmark"></span><span>Benchmark</span></div></div>
     <svg viewBox="0 0 980 280" class="equity-chart" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Modell vs Benchmark">
       <rect x="0" y="0" width="980" height="280" fill="white"></rect>
-      <line x1="60" y1="238.00" x2="954" y2="238.00" class="grid-line"></line><text x="50" y="242.00" text-anchor="end" class="axis-label">0.51x</text><line x1="60" y1="183.00" x2="954" y2="183.00" class="grid-line"></line><text x="50" y="187.00" text-anchor="end" class="axis-label">1.23x</text><line x1="60" y1="128.00" x2="954" y2="128.00" class="grid-line"></line><text x="50" y="132.00" text-anchor="end" class="axis-label">1.95x</text><line x1="60" y1="73.00" x2="954" y2="73.00" class="grid-line"></line><text x="50" y="77.00" text-anchor="end" class="axis-label">2.67x</text><line x1="60" y1="18.00" x2="954" y2="18.00" class="grid-line"></line><text x="50" y="22.00" text-anchor="end" class="axis-label">3.39x</text>
+      <line x1="60" y1="238.00" x2="954" y2="238.00" class="grid-line"></line><text x="50" y="242.00" text-anchor="end" class="axis-label">0.84x</text><line x1="60" y1="183.00" x2="954" y2="183.00" class="grid-line"></line><text x="50" y="187.00" text-anchor="end" class="axis-label">1.20x</text><line x1="60" y1="128.00" x2="954" y2="128.00" class="grid-line"></line><text x="50" y="132.00" text-anchor="end" class="axis-label">1.56x</text><line x1="60" y1="73.00" x2="954" y2="73.00" class="grid-line"></line><text x="50" y="77.00" text-anchor="end" class="axis-label">1.92x</text><line x1="60" y1="18.00" x2="954" y2="18.00" class="grid-line"></line><text x="50" y="22.00" text-anchor="end" class="axis-label">2.27x</text>
       <line x1="60" y1="238" x2="954" y2="238" class="axis-line"></line>
       <line x1="60" y1="18" x2="60" y2="238" class="axis-line"></line>
-      <path d="M 60.00,200.44 L 71.76,204.93 L 83.53,203.04 L 95.29,203.74 L 107.05,202.24 L 118.82,205.41 L 130.58,199.18 L 142.34,195.95 L 154.11,198.32 L 165.87,189.33 L 177.63,180.07 L 189.39,192.86 L 201.16,203.14 L 212.92,213.53 L 224.68,216.60 L 236.45,215.58 L 248.21,216.07 L 259.97,222.08 L 271.74,222.66 L 283.50,222.83 L 295.26,219.35 L 307.03,218.19 L 318.79,219.63 L 330.55,217.25 L 342.32,217.99 L 354.08,216.72 L 365.84,215.09 L 377.61,217.36 L 389.37,215.63 L 401.13,214.25 L 412.89,212.33 L 424.66,210.71 L 436.42,206.07 L 448.18,207.84 L 459.95,208.70 L 471.71,208.04 L 483.47,209.43 L 495.24,212.08 L 507.00,212.21 L 518.76,208.27 L 530.53,202.03 L 542.29,194.28 L 554.05,193.86 L 565.82,182.62 L 577.58,192.63 L 589.34,186.32 L 601.11,175.34 L 612.87,167.31 L 624.63,160.29 L 636.39,162.00 L 648.16,175.84 L 659.92,164.73 L 671.68,163.01 L 683.45,160.74 L 695.21,156.67 L 706.97,153.23 L 718.74,148.50 L 730.50,134.99 L 742.26,125.32 L 754.03,113.62 L 765.79,112.72 L 777.55,105.81 L 789.32,102.76 L 801.08,93.37 L 812.84,95.85 L 824.61,121.35 L 836.37,105.70 L 848.13,101.14 L 859.89,112.38 L 871.66,104.60 L 883.42,97.48 L 895.18,93.71 L 906.95,86.78 L 918.71,64.34 L 930.47,34.22 L 942.24,44.35 L 954.00,33.17" class="portfolio-path"></path>
-      <path d="M 60.00,200.44 L 71.76,200.08 L 83.53,200.70 L 95.29,200.63 L 107.05,199.88 L 118.82,201.58 L 130.58,199.40 L 142.34,198.92 L 154.11,199.57 L 165.87,199.61 L 177.63,199.04 L 189.39,200.56 L 201.16,200.53 L 212.92,205.55 L 224.68,207.61 L 236.45,207.26 L 248.21,207.93 L 259.97,215.54 L 271.74,213.30 L 283.50,214.95 L 295.26,211.97 L 307.03,209.63 L 318.79,209.49 L 330.55,205.74 L 342.32,208.08 L 354.08,207.46 L 365.84,206.78 L 377.61,207.91 L 389.37,207.50 L 401.13,206.19 L 412.89,205.65 L 424.66,205.26 L 436.42,204.27 L 448.18,204.05 L 459.95,203.74 L 471.71,203.54 L 483.47,202.67 L 495.24,202.21 L 507.00,202.67 L 518.76,202.26 L 530.53,201.60 L 542.29,201.03 L 554.05,200.42 L 565.82,199.98 L 577.58,200.80 L 589.34,200.36 L 601.11,198.34 L 612.87,197.47 L 624.63,198.60 L 636.39,199.05 L 648.16,199.89 L 659.92,197.50 L 671.68,197.53 L 683.45,198.63 L 695.21,198.44 L 706.97,197.73 L 718.74,198.31 L 730.50,196.43 L 742.26,196.37 L 754.03,197.65 L 765.79,198.73 L 777.55,197.64 L 789.32,199.25 L 801.08,197.72 L 812.84,198.34 L 824.61,198.61 L 836.37,199.20 L 848.13,200.96 L 859.89,202.38 L 871.66,200.20 L 883.42,198.13 L 895.18,195.22 L 906.95,194.09 L 918.71,193.64 L 930.47,191.70 L 942.24,191.02 L 954.00,189.84" class="benchmark-path"></path>
-      <text x="60.00" y="268" text-anchor="middle" class="axis-label">12/24</text><text x="354.08" y="268" text-anchor="middle" class="axis-label">05/25</text><text x="659.92" y="268" text-anchor="middle" class="axis-label">11/25</text><text x="954.00" y="268" text-anchor="middle" class="axis-label">05/26</text>
+      <path d="M 60.00,213.38 L 95.76,211.03 L 131.52,207.92 L 167.28,202.34 L 203.04,197.63 L 238.80,191.15 L 274.56,172.64 L 310.32,159.40 L 346.08,143.37 L 381.84,142.14 L 417.60,132.68 L 453.36,128.50 L 489.12,115.63 L 524.88,119.04 L 560.64,153.96 L 596.40,132.53 L 632.16,126.27 L 667.92,141.67 L 703.68,131.02 L 739.44,121.27 L 775.20,116.10 L 810.96,106.60 L 846.72,75.87 L 882.48,34.61 L 918.24,48.49 L 954.00,33.17" class="portfolio-path"></path>
+      <path d="M 60.00,213.38 L 95.76,213.43 L 131.52,215.56 L 167.28,215.20 L 203.04,213.82 L 238.80,214.95 L 274.56,211.30 L 310.32,211.19 L 346.08,213.66 L 381.84,215.76 L 417.60,213.65 L 453.36,216.77 L 489.12,213.80 L 524.88,215.00 L 560.64,215.51 L 596.40,216.66 L 632.16,220.08 L 667.92,222.83 L 703.68,218.61 L 739.44,214.59 L 775.20,208.96 L 810.96,206.77 L 846.72,205.89 L 882.48,202.14 L 918.24,200.81 L 954.00,198.54" class="benchmark-path"></path>
+      <text x="60.00" y="268" text-anchor="middle" class="axis-label">11/25</text><text x="346.08" y="268" text-anchor="middle" class="axis-label">01/26</text><text x="667.92" y="268" text-anchor="middle" class="axis-label">03/26</text><text x="954.00" y="268" text-anchor="middle" class="axis-label">05/26</text>
     </svg>
     </div>
           </div>
@@ -664,7 +671,8 @@
           <div class="card perf-card">
             <div class="eyebrow">Kennzahlen</div>
             <h2 class="section-title">Risk / Return Snapshot</h2>
-            <div class="table-wrap"><table class="report-table performance-table"><thead><tr><th>Kennzahl</th><th>Modell</th><th>S&amp;P 500</th></tr></thead><tbody><tr><td>Weekly Return</td><td>4.8%</td><td>1.4%</td></tr><tr><td>YTD Return</td><td>90.0%</td><td>10.8%</td></tr><tr><td>Max Drawdown</td><td>-44.3%</td><td>-21.4%</td></tr><tr><td>Sharpe</td><td>1.98</td><td>n/a</td></tr></tbody></table></div>
+            <div class="table-wrap"><table class="report-table performance-table"><thead><tr><th>Kennzahl</th><th>Modell</th><th>S&amp;P 500</th></tr></thead><tbody><tr><td>Weekly Return</td><td>4.8%</td><td>1.4%</td></tr><tr><td>YTD Return</td><td>90.0%</td><td>10.8%</td></tr><tr><td>Max Drawdown*</td><td>-15.3%</td><td>-7.5%</td></tr><tr><td>Sharpe*</td><td>4.09</td><td>n/a</td></tr></tbody></table></div>
+            <div class="metric-footnote">* Max Drawdown und Sharpe beziehen sich ausschließlich auf den Zeitraum: letzte 6 Monate.</div>
           </div>
         </section>
 
