@@ -1,0 +1,701 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nasdaq 100 Wochenreport</title>
+  <style>
+    :root {
+      --ink: #10202F;
+      --ink-2: #17324D;
+      --ink-3: #3F5468;
+      --muted: #6A7A89;
+      --bg: #F3F5F7;
+      --card: #FFFFFF;
+      --line: #D9E0E7;
+      --line-2: #E8EDF2;
+      --soft: #F7F9FB;
+      --green-bg: #EEF6F0;
+      --green-text: #225A32;
+      --red-bg: #FAEEEF;
+      --red-text: #992E37;
+      --shadow: 0 10px 24px rgba(16, 32, 47, 0.05);
+      --radius: 16px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Inter, Aptos, Arial, sans-serif;
+      line-height: 1.45;
+    }
+
+    .topline {
+      height: 8px;
+      background: linear-gradient(90deg, #0F2233 0%, #17324D 60%, #4A5F73 100%);
+    }
+
+    .page {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .pdf-page {
+      margin-bottom: 18px;
+    }
+
+    .pdf-page.ranking-page {
+      break-before: page;
+      page-break-before: always;
+    }
+
+    .first-page-scale {
+      width: 100%;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 120px minmax(0, 1fr) 340px;
+      gap: 22px;
+      align-items: start;
+      padding: 18px 22px;
+      margin-bottom: 18px;
+    }
+
+    .brand-logo {
+      width: 108px;
+      height: auto;
+      display: block;
+      object-fit: contain;
+    }
+
+    .brand-fallback {
+      width: 108px;
+      height: 76px;
+      display: grid;
+      place-items: center;
+      background: var(--ink-2);
+      color: white;
+      font-size: 28px;
+      font-weight: 800;
+      border-radius: 10px;
+    }
+
+    .brand-caption {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--ink-3);
+      margin-bottom: 8px;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+
+    .hero-title {
+      font-size: 40px;
+      line-height: 1.02;
+      font-weight: 800;
+      color: var(--ink);
+      margin: 0 0 8px 0;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-sub {
+      color: var(--muted);
+      font-size: 15px;
+      margin: 0;
+      max-width: 820px;
+    }
+
+    .meta-box {
+      border-left: 1px solid var(--line);
+      padding-left: 18px;
+      display: grid;
+      gap: 10px;
+      align-self: start;
+      margin-top: 2px;
+    }
+
+    .meta-row {
+      display: grid;
+      grid-template-columns: 92px 1fr;
+      gap: 8px;
+      align-items: start;
+    }
+
+    .meta-key {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    .meta-val {
+      font-size: 14px;
+      color: var(--ink);
+      font-weight: 600;
+      word-break: break-word;
+    }
+
+    .eyebrow {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--muted);
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .section-title {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--ink);
+      margin: 0 0 14px 0;
+      letter-spacing: -0.02em;
+    }
+
+    .split-2-equal {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-bottom: 18px;
+      align-items: stretch;
+    }
+
+    .split-2-equal > .card,
+    .split-2-equal > .decision-panel-wrap {
+      height: 100%;
+    }
+
+    .split-2 {
+      display: grid;
+      grid-template-columns: 1.18fr 0.92fr;
+      gap: 18px;
+      margin-bottom: 18px;
+      align-items: stretch;
+    }
+
+    .split-2 > .card {
+      height: 100%;
+    }
+
+    .detail-section,
+    .decision-panel-wrap,
+    .perf-card {
+      padding: 18px 20px;
+      height: 100%;
+    }
+
+    .decision-panel-wrap {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .ranking-card {
+      break-inside: auto;
+      page-break-inside: auto;
+    }
+
+    .decision-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      flex: 1;
+      align-items: stretch;
+    }
+
+    .decision-panel {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 14px;
+      background: var(--soft);
+      height: 100%;
+    }
+
+    .decision-panel.buy { background: var(--green-bg); }
+    .decision-panel.sell { background: var(--red-bg); }
+
+    .decision-title {
+      font-size: 14px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .decision-panel.buy .decision-title { color: var(--green-text); }
+    .decision-panel.sell .decision-title { color: var(--red-text); }
+
+    .decision-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 12px;
+    }
+
+    .decision-item {
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .decision-item:last-child {
+      padding-bottom: 0;
+      border-bottom: 0;
+    }
+
+    .decision-main {
+      line-height: 1.35;
+    }
+
+    .decision-ticker {
+      font-weight: 800;
+    }
+
+    .decision-sep {
+      padding: 0 6px;
+      opacity: 0.7;
+    }
+
+    .decision-meta {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .pnl-meta {
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .decision-empty {
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .metric-card {
+      background: linear-gradient(180deg, #FFFFFF 0%, #FBFCFD 100%);
+      border: 1px solid var(--line);
+      border-top: 3px solid var(--ink-2);
+      border-radius: 12px;
+      padding: 15px 16px 14px 16px;
+      min-height: 106px;
+      box-shadow: 0 8px 18px rgba(16, 32, 47, 0.035);
+    }
+
+    .metric-card.good { border-top-color: #2F6F45; }
+    .metric-card.bad { border-top-color: #A03C45; }
+
+    .metric-label {
+      color: var(--muted);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .metric-value {
+      color: var(--ink);
+      font-size: 28px;
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: 8px;
+      letter-spacing: -0.02em;
+    }
+
+    .metric-sub {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .metric-footnote {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.35;
+    }
+
+    .detail-header {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 12px;
+    }
+
+    .detail-sub {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .report-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 620px;
+    }
+
+    .top-preview.report-table {
+      min-width: 0;
+      table-layout: fixed;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    .report-table thead {
+      display: table-header-group;
+    }
+
+    .report-table tbody tr {
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    .report-table thead th {
+      text-align: left;
+      padding: 10px 12px;
+      background: var(--ink-2);
+      color: white;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      border-bottom: 0;
+      white-space: nowrap;
+    }
+
+    .report-table tbody td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--line-2);
+      background: white;
+      font-size: 13px;
+      vertical-align: top;
+    }
+
+    .report-table tbody tr:nth-child(even) td {
+      background: #FBFCFD;
+    }
+
+    .report-table td.num {
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .chart-wrap {
+      margin-top: 8px;
+    }
+
+    .equity-chart {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .linechart-legend {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .legend-line {
+      width: 24px;
+      height: 0;
+      border-top: 3px solid var(--ink-2);
+      display: inline-block;
+      border-radius: 2px;
+    }
+
+    .legend-line.benchmark {
+      border-top-style: dashed;
+      border-top-color: #70859A;
+    }
+
+    .legend-line.portfolio {
+      border-top-color: var(--ink-2);
+    }
+
+    .grid-line {
+      stroke: #E5EBF0;
+      stroke-width: 1;
+    }
+
+    .axis-line {
+      stroke: #BFC9D2;
+      stroke-width: 1.2;
+    }
+
+    .axis-label {
+      font: 600 11px Inter, Aptos, Arial, sans-serif;
+      fill: var(--muted);
+    }
+
+    .portfolio-path {
+      fill: none;
+      stroke: var(--ink-2);
+      stroke-width: 3;
+      stroke-linejoin: round;
+      stroke-linecap: round;
+    }
+
+    .benchmark-path {
+      fill: none;
+      stroke: #70859A;
+      stroke-width: 2.4;
+      stroke-dasharray: 7 5;
+      stroke-linejoin: round;
+      stroke-linecap: round;
+    }
+
+    .empty-box {
+      background: #FBFCFD;
+      border: 1px dashed var(--line);
+      border-radius: 10px;
+      padding: 16px;
+      color: var(--muted);
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+    }
+
+    .badge-buy {
+      background: var(--green-bg);
+      color: var(--green-text);
+    }
+
+    .badge-sell {
+      background: var(--red-bg);
+      color: var(--red-text);
+    }
+
+    .badge-neutral {
+      background: #EEF2F6;
+      color: var(--ink-3);
+    }
+
+    .legal-disclaimer {
+      padding: 16px 20px;
+      margin-top: 18px;
+      border-left: 4px solid var(--ink-2);
+      background: #FBFCFD;
+    }
+
+    .legal-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--ink);
+      margin: 0 0 10px 0;
+      letter-spacing: -0.01em;
+    }
+
+    .legal-disclaimer p {
+      margin: 0 0 8px 0;
+      color: var(--ink-3);
+      font-size: 11px;
+      line-height: 1.45;
+    }
+
+    .legal-disclaimer p:last-child {
+      margin-bottom: 0;
+    }
+
+    @media (max-width: 1400px) {
+      .metrics-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 1220px) {
+      .hero {
+        grid-template-columns: 100px 1fr;
+      }
+
+      .meta-box {
+        grid-column: 1 / -1;
+        border-left: 0;
+        border-top: 1px solid var(--line);
+        padding-left: 0;
+        padding-top: 14px;
+        margin-top: 0;
+      }
+
+      .split-2,
+      .split-2-equal {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .page {
+        padding: 12px;
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .decision-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .metrics-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-title {
+        font-size: 31px;
+      }
+    }
+
+    @media print {
+      body { background: white; }
+      .page { max-width: none; padding: 0; }
+      .card, .metric-card { box-shadow: none; }
+      .topline { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="topline"></div>
+  <div class="page">
+
+    <section class="pdf-page first-page">
+      <div class="first-page-scale">
+
+        <section class="hero">
+          <div class="hero-left">
+            <div class="brand-fallback">TAB</div>
+          </div>
+
+          <div class="hero-mid">
+            <div class="brand-caption">TAB RESEARCH</div>
+            <h1 class="hero-title">Nasdaq 100 Wochenreport</h1>
+            <p class="hero-sub">
+              Regelbasierter Trendstärke-Research mit Fokus auf Modellpositionen, Ranking-Veränderungen, Performance und Risiko.
+            </p>
+          </div>
+
+          <div class="meta-box">
+            <div class="meta-row">
+              <div class="meta-key">WOCHE</div>
+              <div class="meta-val">KW 35</div>
+            </div>
+            <div class="meta-row">
+              <div class="meta-key">ERSTELLT</div>
+              <div class="meta-val">29.08.2026</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="split-2-equal">
+          <div class="card detail-section">
+            <div class="detail-header">
+              <div>
+                <div class="eyebrow">Modellportfolio</div>
+                <h2 class="section-title" style="margin-bottom:0;">Top-5 Modellwerte</h2>
+              </div>
+              <div class="detail-sub">Kompakte Vorschau der führenden Werte nach Trendstärke-Modell.</div>
+            </div>
+            <div class="table-wrap"><table class="report-table top-preview"><thead><tr><th>Rang</th><th>Ticker</th><th>Name</th></tr></thead><tbody><tr><td class="num">1</td><td>PANW</td><td>Palo Alto Networks</td></tr><tr><td class="num">2</td><td>WDAY</td><td>Workday, Inc.</td></tr><tr><td class="num">3</td><td>MU</td><td>Micron Technology</td></tr><tr><td class="num">4</td><td>CRWD</td><td>CrowdStrike</td></tr><tr><td class="num">5</td><td>MRVL</td><td>Marvell Technology</td></tr></tbody></table></div>
+          </div>
+
+          <div class="card decision-panel-wrap">
+            <div class="eyebrow">Modellsektion</div>
+            <h2 class="section-title">Ranking-Veränderungen dieser Woche</h2>
+            <div class="decision-grid">
+              <div class="decision-panel buy"><div class="decision-title">Neu im Top-5-Modell</div><ul class="decision-list"><li class="decision-item"><div class="decision-main"><span class="decision-ticker">MRVL</span><span class="decision-sep">–</span><span class="decision-name">Marvell Technology</span></div><div class="decision-meta">Rang 10 → 5 • Trendstärke 94.2</div></li><li class="decision-item"><div class="decision-main"><span class="decision-ticker">MU</span><span class="decision-sep">–</span><span class="decision-name">Micron Technology</span></div><div class="decision-meta">Rang 6 → 3 • Trendstärke 95.7</div></li></ul></div>
+              <div class="decision-panel sell"><div class="decision-title">Nicht mehr im Top-5-Modell</div><ul class="decision-list"><li class="decision-item"><div class="decision-main"><span class="decision-ticker">DDOG</span><span class="decision-sep">–</span><span class="decision-name">Datadog</span></div><div class="decision-meta">Rang 4 → 13 • Trendstärke 88.6</div><div class="decision-meta pnl-meta">Return -7.3% • PnL -293.19 EUR</div></li><li class="decision-item"><div class="decision-main"><span class="decision-ticker">FTNT</span><span class="decision-sep">–</span><span class="decision-name">Fortinet</span></div><div class="decision-meta">Rang 3 → 8 • Trendstärke 91.8</div><div class="decision-meta pnl-meta">Return -5.6% • PnL -225.54 EUR</div></li></ul></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="metrics-grid">
+          <div class="metric-card bad"><div class="metric-label">Weekly Return</div><div class="metric-value">-7.1%</div><div class="metric-sub">aktuellste Modellwoche</div></div>
+          <div class="metric-card bad"><div class="metric-label">Relativ vs Nasdaq 100</div><div class="metric-value">-3.5%</div><div class="metric-sub">benchmark-relative Wochenentwicklung</div></div>
+          <div class="metric-card default"><div class="metric-label">Max Drawdown</div><div class="metric-value">-37.6%</div><div class="metric-sub">Seit Jahresbeginn</div></div>
+          <div class="metric-card default"><div class="metric-label">Sharpe</div><div class="metric-value">1.61</div><div class="metric-sub">annualisiert, Seit Jahresbeginn</div></div>
+          <div class="metric-card good"><div class="metric-label">YTD Return</div><div class="metric-value">62.4%</div><div class="metric-sub">Modell seit Jahresbeginn</div></div>
+        </section>
+
+        <section class="split-2">
+          <div class="card perf-card">
+            <div class="eyebrow">Performance(Seit Jahresbeginn)</div>
+            <h2 class="section-title">Trendstärke-Modell vs Nasdaq 100</h2>
+            <div class="chart-wrap">
+    <div class="linechart-legend"><div class="legend-item"><span class="legend-line portfolio"></span><span>Modell</span></div><div class="legend-item"><span class="legend-line benchmark"></span><span>Benchmark</span></div></div>
+    <svg viewBox="0 0 980 280" class="equity-chart" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Modell vs Benchmark">
+      <rect x="0" y="0" width="980" height="280" fill="white"></rect>
+      <line x1="60" y1="238.00" x2="954" y2="238.00" class="grid-line"></line><text x="50" y="242.00" text-anchor="end" class="axis-label">0.80x</text><line x1="60" y1="183.00" x2="954" y2="183.00" class="grid-line"></line><text x="50" y="187.00" text-anchor="end" class="axis-label">1.29x</text><line x1="60" y1="128.00" x2="954" y2="128.00" class="grid-line"></line><text x="50" y="132.00" text-anchor="end" class="axis-label">1.77x</text><line x1="60" y1="73.00" x2="954" y2="73.00" class="grid-line"></line><text x="50" y="77.00" text-anchor="end" class="axis-label">2.25x</text><line x1="60" y1="18.00" x2="954" y2="18.00" class="grid-line"></line><text x="50" y="22.00" text-anchor="end" class="axis-label">2.73x</text>
+      <line x1="60" y1="238" x2="954" y2="238" class="axis-line"></line>
+      <line x1="60" y1="18" x2="60" y2="238" class="axis-line"></line>
+      <path d="M 60.00,215.53 L 87.09,205.15 L 114.18,198.65 L 141.27,197.53 L 168.36,190.09 L 195.45,184.37 L 222.55,186.16 L 249.64,181.54 L 276.73,185.46 L 303.82,201.60 L 330.91,192.09 L 358.00,185.59 L 385.09,197.18 L 412.18,192.01 L 439.27,179.42 L 466.36,170.10 L 493.45,148.59 L 520.55,131.67 L 547.64,100.46 L 574.73,110.03 L 601.82,99.79 L 628.91,76.47 L 656.00,98.49 L 683.09,66.41 L 710.18,33.17 L 737.27,67.72 L 764.36,94.39 L 791.45,95.89 L 818.55,128.85 L 845.64,135.20 L 872.73,138.47 L 899.82,134.91 L 926.91,130.25 L 954.00,144.46" class="portfolio-path"></path>
+      <path d="M 60.00,215.53 L 87.09,212.09 L 114.18,212.61 L 141.27,213.78 L 168.36,215.98 L 195.45,216.43 L 222.55,218.72 L 249.64,216.51 L 276.73,217.11 L 303.82,216.64 L 330.91,216.94 L 358.00,219.68 L 385.09,222.83 L 412.18,219.12 L 439.27,215.19 L 466.36,209.07 L 493.45,205.24 L 520.55,203.81 L 547.64,196.93 L 574.73,196.57 L 601.82,194.48 L 628.91,191.11 L 656.00,196.88 L 683.09,193.39 L 710.18,188.92 L 737.27,193.52 L 764.36,192.55 L 791.45,190.74 L 818.55,196.64 L 845.64,197.98 L 872.73,198.94 L 899.82,192.31 L 926.91,190.92 L 954.00,196.02" class="benchmark-path"></path>
+      <text x="60.00" y="268" text-anchor="middle" class="axis-label">01/26</text><text x="358.00" y="268" text-anchor="middle" class="axis-label">03/26</text><text x="656.00" y="268" text-anchor="middle" class="axis-label">06/26</text><text x="954.00" y="268" text-anchor="middle" class="axis-label">08/26</text>
+    </svg>
+    </div>
+          </div>
+
+          <div class="card perf-card">
+            <div class="eyebrow">Kennzahlen</div>
+            <h2 class="section-title">Risk / Return Snapshot</h2>
+            <div class="table-wrap"><table class="report-table performance-table"><thead><tr><th>Kennzahl</th><th>Modell</th><th>Nasdaq 100</th></tr></thead><tbody><tr><td>Weekly Return</td><td>-7.1%</td><td>-3.7%</td></tr><tr><td>YTD Return</td><td>62.4%</td><td>17.1%</td></tr><tr><td>Max Drawdown*</td><td>-37.6%</td><td>-9.2%</td></tr><tr><td>Sharpe*</td><td>1.61</td><td>n/a</td></tr></tbody></table></div>
+            <div class="metric-footnote">* Max Drawdown und Sharpe beziehen sich ausschließlich auf den Zeitraum: Seit Jahresbeginn.</div>
+          </div>
+        </section>
+
+        <section class="card legal-disclaimer"><div class="eyebrow">Rechtlicher Hinweis</div><h2 class="legal-title">Wichtiger rechtlicher Hinweis</h2><p>Dieser Report dient ausschließlich allgemeinen Informations- und Researchzwecken. Er stellt keine Anlageberatung, keine Anlagevermittlung, keine Finanzportfolioverwaltung und keine individuelle Empfehlung zum Kauf, Verkauf oder Halten von Wertpapieren oder sonstigen Finanzinstrumenten dar.</p><p>Die dargestellten Inhalte basieren auf einem regelbasierten quantitativen Modell und sind nicht auf die persönliche finanzielle Situation, Risikotragfähigkeit, Anlageziele oder sonstige individuellen Umstände einzelner Empfänger zugeschnitten. Anlageentscheidungen erfolgen ausschließlich eigenverantwortlich.</p><p>Vergangene Wertentwicklungen, Backtests, Modellrechnungen und historische Kennzahlen sind kein verlässlicher Indikator für zukünftige Ergebnisse. Wertpapierinvestitionen sind mit Risiken verbunden, bis hin zum vollständigen Verlust des eingesetzten Kapitals.</p><p>Der Herausgeber kann in einzelnen im Report genannten Wertpapieren oder Finanzinstrumenten selbst investiert sein. Die Auswahl der Werte erfolgt nach dem beschriebenen regelbasierten Modell.</p></section>
+
+      </div>
+    </section>
+
+    
+            <section class="pdf-page ranking-page">
+              <section class="card detail-section ranking-card">
+                <div class="detail-header">
+                  <div>
+                    <div class="eyebrow">Breiteres Ranking</div>
+                    <h2 class="section-title" style="margin-bottom:0;">Vollständiges Ranking</h2>
+                  </div>
+                  <div class="detail-sub">Gesamtes aktuelles Nasdaq-100-Ranking zur Einordnung des Modellportfolios.</div>
+                </div>
+                <div class="table-wrap"><table class="report-table ranking-table"><thead><tr><th>Rang</th><th>Ticker</th><th>Name</th><th>Trendstärke</th><th>Montag Eröffnung</th><th>Referenzkurs</th><th>1W %</th><th>YTD %</th><th>6M %</th></tr></thead><tbody><tr><td class="num">1</td><td>PANW</td><td>Palo Alto Networks</td><td class="num">98.9</td><td class="num">304.8</td><td class="num">306.2</td><td class="num">-6.9%</td><td class="num">99.5%</td><td class="num">156.3%</td></tr><tr><td class="num">2</td><td>WDAY</td><td>Workday, Inc.</td><td class="num">96.6</td><td class="num">171.0</td><td class="num">171.1</td><td class="num">0.7%</td><td class="num">-2.8%</td><td class="num">39.1%</td></tr><tr><td class="num">3</td><td>MU</td><td>Micron Technology</td><td class="num">95.7</td><td class="num">800.2</td><td class="num">827.2</td><td class="num">-0.5%</td><td class="num">206.7%</td><td class="num">125.2%</td></tr><tr><td class="num">4</td><td>CRWD</td><td>CrowdStrike</td><td class="num">95.5</td><td class="num">162.2</td><td class="num">164.2</td><td class="num">-11.5%</td><td class="num">69.3%</td><td class="num">139.3%</td></tr><tr><td class="num">5</td><td>MRVL</td><td>Marvell Technology</td><td class="num">94.2</td><td class="num">196.2</td><td class="num">202.8</td><td class="num">6.8%</td><td class="num">165.6%</td><td class="num">204.7%</td></tr><tr><td class="num">6</td><td>SNDK</td><td>Sandisk</td><td class="num">92.7</td><td class="num">1279.0</td><td class="num">1365.6</td><td class="num">-2.7%</td><td class="num">479.9%</td><td class="num">127.8%</td></tr><tr><td class="num">7</td><td>ABNB</td><td>Airbnb</td><td class="num">92.5</td><td class="num">161.8</td><td class="num">160.3</td><td class="num">1.8%</td><td class="num">40.8%</td><td class="num">34.6%</td></tr><tr><td class="num">8</td><td>FTNT</td><td>Fortinet</td><td class="num">91.8</td><td class="num">130.5</td><td class="num">131.3</td><td class="num">-4.1%</td><td class="num">97.1%</td><td class="num">118.2%</td></tr><tr><td class="num">9</td><td>NBIS</td><td>Nebius Group</td><td class="num">91.6</td><td class="num">180.8</td><td class="num">187.5</td><td class="num">-21.1%</td><td class="num">143.6%</td><td class="num">108.3%</td></tr><tr><td class="num">10</td><td>AXON</td><td>Axon Enterprise</td><td class="num">91.4</td><td class="num">532.6</td><td class="num">537.1</td><td class="num">2.4%</td><td class="num">11.4%</td><td class="num">11.1%</td></tr><tr><td class="num">11</td><td>PYPL</td><td>PayPal</td><td class="num">90.1</td><td class="num">52.7</td><td class="num">52.7</td><td class="num">-0.2%</td><td class="num">6.5%</td><td class="num">35.9%</td></tr><tr><td class="num">12</td><td>DXCM</td><td>DexCom</td><td class="num">88.6</td><td class="num">79.0</td><td class="num">79.0</td><td class="num">2.9%</td><td class="num">38.8%</td><td class="num">20.1%</td></tr><tr><td class="num">13</td><td>DDOG</td><td>Datadog</td><td class="num">88.6</td><td class="num">200.7</td><td class="num">201.6</td><td class="num">-7.8%</td><td class="num">76.1%</td><td class="num">108.6%</td></tr><tr><td class="num">14</td><td>AMD</td><td>Advanced Micro Devices</td><td class="num">86.5</td><td class="num">401.1</td><td class="num">404.9</td><td class="num">-8.0%</td><td class="num">111.8%</td><td class="num">134.0%</td></tr><tr><td class="num">15</td><td>STX</td><td>Seagate Technology</td><td class="num">86.2</td><td class="num">700.8</td><td class="num">727.3</td><td class="num">-12.7%</td><td class="num">196.3%</td><td class="num">107.3%</td></tr><tr><td class="num">16</td><td>DASH</td><td>DoorDash</td><td class="num">85.6</td><td class="num">190.1</td><td class="num">191.2</td><td class="num">3.0%</td><td class="num">1.7%</td><td class="num">28.5%</td></tr><tr><td class="num">17</td><td>PLTR</td><td>Palantir Technologies</td><td class="num">83.7</td><td class="num">151.9</td><td class="num">154.0</td><td class="num">3.4%</td><td class="num">7.2%</td><td class="num">36.8%</td></tr><tr><td class="num">18</td><td>PAYX</td><td>Paychex</td><td class="num">81.7</td><td class="num">106.8</td><td class="num">106.5</td><td class="num">2.0%</td><td class="num">17.3%</td><td class="num">35.6%</td></tr><tr><td class="num">19</td><td>ADP</td><td>Automatic Data Processing</td><td class="num">81.5</td><td class="num">240.5</td><td class="num">240.3</td><td class="num">2.9%</td><td class="num">12.8%</td><td class="num">32.5%</td></tr><tr><td class="num">20</td><td>SHOP</td><td>Shopify</td><td class="num">81.3</td><td class="num">127.1</td><td class="num">127.7</td><td class="num">-3.3%</td><td class="num">-5.1%</td><td class="num">22.5%</td></tr><tr><td class="num">21</td><td>ALAB</td><td>Astera Labs</td><td class="num">80.0</td><td class="num">232.6</td><td class="num">243.8</td><td class="num">-11.4%</td><td class="num">58.7%</td><td class="num">143.9%</td></tr><tr><td class="num">22</td><td>AMGN</td><td>Amgen</td><td class="num">77.6</td><td class="num">376.9</td><td class="num">375.9</td><td class="num">6.4%</td><td class="num">36.0%</td><td class="num">16.1%</td></tr><tr><td class="num">23</td><td>BKNG</td><td>Booking Holdings</td><td class="num">77.0</td><td class="num">180.5</td><td class="num">179.3</td><td class="num">-1.1%</td><td class="num">-1.1%</td><td class="num">19.7%</td></tr><tr><td class="num">24</td><td>MSFT</td><td>Microsoft</td><td class="num">76.1</td><td class="num">413.7</td><td class="num">413.5</td><td class="num">-2.3%</td><td class="num">2.6%</td><td class="num">26.0%</td></tr><tr><td class="num">25</td><td>VRTX</td><td>Vertex Pharmaceuticals</td><td class="num">72.7</td><td class="num">470.0</td><td class="num">468.9</td><td class="num">8.4%</td><td class="num">21.2%</td><td class="num">14.0%</td></tr><tr><td class="num">26</td><td>REGN</td><td>Regeneron Pharmaceuticals</td><td class="num">71.8</td><td class="num">714.4</td><td class="num">713.6</td><td class="num">3.9%</td><td class="num">7.7%</td><td class="num">5.0%</td></tr><tr><td class="num">27</td><td>ASML</td><td>ASML Holding</td><td class="num">71.2</td><td class="num">1508.0</td><td class="num">1509.1</td><td class="num">-4.4%</td><td class="num">52.1%</td><td class="num">18.8%</td></tr><tr><td class="num">28</td><td>ROP</td><td>Roper Technologies</td><td class="num">70.8</td><td class="num">354.4</td><td class="num">352.3</td><td class="num">3.1%</td><td class="num">-4.8%</td><td class="num">20.6%</td></tr><tr><td class="num">29</td><td>CSX</td><td>CSX Corporation</td><td class="num">69.5</td><td class="num">44.5</td><td class="num">44.1</td><td class="num">2.9%</td><td class="num">43.1%</td><td class="num">21.6%</td></tr><tr><td class="num">30</td><td>TRI</td><td>Thomson Reuters</td><td class="num">68.8</td><td class="num">90.9</td><td class="num">90.3</td><td class="num">2.5%</td><td class="num">-13.9%</td><td class="num">7.3%</td></tr><tr><td class="num">31</td><td>AMAT</td><td>Applied Materials</td><td class="num">66.5</td><td class="num">412.5</td><td class="num">421.2</td><td class="num">-2.8%</td><td class="num">83.6%</td><td class="num">28.5%</td></tr><tr><td class="num">32</td><td>CSCO</td><td>Cisco</td><td class="num">66.4</td><td class="num">94.1</td><td class="num">95.0</td><td class="num">-0.6%</td><td class="num">47.4%</td><td class="num">44.9%</td></tr><tr><td class="num">33</td><td>FAST</td><td>Fastenal</td><td class="num">66.0</td><td class="num">44.1</td><td class="num">43.9</td><td class="num">0.5%</td><td class="num">28.1%</td><td class="num">12.6%</td></tr><tr><td class="num">34</td><td>FANG</td><td>Diamondback Energy</td><td class="num">65.4</td><td class="num">179.8</td><td class="num">180.3</td><td class="num">4.1%</td><td class="num">39.9%</td><td class="num">21.5%</td></tr><tr><td class="num">35</td><td>LRCX</td><td>Lam Research</td><td class="num">64.7</td><td class="num">263.6</td><td class="num">268.7</td><td class="num">-5.5%</td><td class="num">70.0%</td><td class="num">33.5%</td></tr><tr><td class="num">36</td><td>ADBE</td><td>Adobe Inc.</td><td class="num">61.7</td><td class="num">235.4</td><td class="num">235.5</td><td class="num">4.3%</td><td class="num">-17.4%</td><td class="num">11.6%</td></tr><tr><td class="num">37</td><td>TER</td><td>Teradyne</td><td class="num">61.5</td><td class="num">308.3</td><td class="num">321.5</td><td class="num">-10.3%</td><td class="num">81.2%</td><td class="num">11.9%</td></tr><tr><td class="num">38</td><td>CTAS</td><td>Cintas</td><td class="num">61.3</td><td class="num">175.8</td><td class="num">174.4</td><td class="num">2.1%</td><td class="num">10.8%</td><td class="num">3.2%</td></tr><tr><td class="num">39</td><td>WDC</td><td>Western Digital</td><td class="num">60.4</td><td class="num">382.1</td><td class="num">393.1</td><td class="num">-9.7%</td><td class="num">144.9%</td><td class="num">63.8%</td></tr><tr><td class="num">40</td><td>LITE</td><td>Lumentum</td><td class="num">60.0</td><td class="num">705.0</td><td class="num">741.5</td><td class="num">-6.4%</td><td class="num">124.5%</td><td class="num">41.2%</td></tr><tr><td class="num">41</td><td>INTC</td><td>Intel</td><td class="num">59.8</td><td class="num">76.1</td><td class="num">77.1</td><td class="num">-12.1%</td><td class="num">128.7%</td><td class="num">102.6%</td></tr><tr><td class="num">42</td><td>NVDA</td><td>Nvidia</td><td class="num">59.4</td><td class="num">184.5</td><td class="num">183.7</td><td class="num">-4.6%</td><td class="num">13.8%</td><td class="num">23.5%</td></tr><tr><td class="num">43</td><td>ARM</td><td>Arm Holdings</td><td class="num">59.3</td><td class="num">202.3</td><td class="num">208.2</td><td class="num">-12.9%</td><td class="num">112.1%</td><td class="num">97.4%</td></tr><tr><td class="num">44</td><td>AMZN</td><td>Amazon</td><td class="num">58.1</td><td class="num">222.2</td><td class="num">221.3</td><td class="num">-1.5%</td><td class="num">14.2%</td><td class="num">23.2%</td></tr><tr><td class="num">45</td><td>AAPL</td><td>Apple Inc.</td><td class="num">57.0</td><td class="num">266.6</td><td class="num">264.7</td><td class="num">1.1%</td><td class="num">14.4%</td><td class="num">15.4%</td></tr><tr><td class="num">46</td><td>KHC</td><td>Kraft Heinz</td><td class="num">56.3</td><td class="num">22.1</td><td class="num">21.9</td><td class="num">0.3%</td><td class="num">8.6%</td><td class="num">5.9%</td></tr><tr><td class="num">47</td><td>CCEP</td><td>Coca-Cola Europacific Partners</td><td class="num">55.5</td><td class="num">93.5</td><td class="num">92.4</td><td class="num">0.3%</td><td class="num">23.7%</td><td class="num">0.1%</td></tr><tr><td class="num">48</td><td>TTWO</td><td>Take-Two Interactive</td><td class="num">55.3</td><td class="num">205.3</td><td class="num">205.0</td><td class="num">-3.0%</td><td class="num">-4.8%</td><td class="num">9.2%</td></tr><tr><td class="num">49</td><td>ADSK</td><td>Autodesk</td><td class="num">54.8</td><td class="num">217.1</td><td class="num">217.2</td><td class="num">0.9%</td><td class="num">-11.5%</td><td class="num">15.9%</td></tr><tr><td class="num">50</td><td>KDP</td><td>Keurig Dr Pepper</td><td class="num">53.5</td><td class="num">27.6</td><td class="num">27.4</td><td class="num">1.9%</td><td class="num">17.4%</td><td class="num">6.8%</td></tr><tr><td class="num">51</td><td>MDLZ</td><td>Mondelez International</td><td class="num">51.0</td><td class="num">55.4</td><td class="num">55.1</td><td class="num">1.3%</td><td class="num">22.2%</td><td class="num">5.9%</td></tr><tr><td class="num">52</td><td>MELI</td><td>Mercado Libre</td><td class="num">50.8</td><td class="num">1649.4</td><td class="num">1645.1</td><td class="num">4.2%</td><td class="num">-2.6%</td><td class="num">10.9%</td></tr><tr><td class="num">53</td><td>GILD</td><td>Gilead Sciences</td><td class="num">50.8</td><td class="num">124.9</td><td class="num">125.0</td><td class="num">5.6%</td><td class="num">21.6%</td><td class="num">4.8%</td></tr><tr><td class="num">54</td><td>GEHC</td><td>GE HealthCare</td><td class="num">50.3</td><td class="num">64.1</td><td class="num">64.0</td><td class="num">1.5%</td><td class="num">-9.5%</td><td class="num">-13.5%</td></tr><tr><td class="num">55</td><td>PCAR</td><td>Paccar</td><td class="num">50.1</td><td class="num">112.9</td><td class="num">112.1</td><td class="num">0.2%</td><td class="num">18.1%</td><td class="num">2.3%</td></tr><tr><td class="num">56</td><td>ROST</td><td>Ross Stores</td><td class="num">49.0</td><td class="num">203.8</td><td class="num">204.5</td><td class="num">-2.6%</td><td class="num">31.3%</td><td class="num">13.4%</td></tr><tr><td class="num">57</td><td>SBUX</td><td>Starbucks</td><td class="num">48.6</td><td class="num">91.8</td><td class="num">91.6</td><td class="num">-0.6%</td><td class="num">29.1%</td><td class="num">10.0%</td></tr><tr><td class="num">58</td><td>TXN</td><td>Texas Instruments</td><td class="num">46.2</td><td class="num">224.7</td><td class="num">226.2</td><td class="num">-5.4%</td><td class="num">50.6%</td><td class="num">26.0%</td></tr><tr><td class="num">59</td><td>BKR</td><td>Baker Hughes</td><td class="num">44.5</td><td class="num">53.1</td><td class="num">53.3</td><td class="num">-3.8%</td><td class="num">33.2%</td><td class="num">-4.0%</td></tr><tr><td class="num">60</td><td>WBD</td><td>Warner Bros. Discovery</td><td class="num">44.3</td><td class="num">24.7</td><td class="num">24.4</td><td class="num">2.0%</td><td class="num">0.1%</td><td class="num">0.3%</td></tr><tr><td class="num">61</td><td>KLAC</td><td>KLA Corporation</td><td class="num">41.3</td><td class="num">154.1</td><td class="num">157.4</td><td class="num">-9.6%</td><td class="num">44.7%</td><td class="num">20.7%</td></tr><tr><td class="num">62</td><td>ADI</td><td>Analog Devices</td><td class="num">38.3</td><td class="num">319.1</td><td class="num">319.2</td><td class="num">-4.2%</td><td class="num">37.1%</td><td class="num">6.3%</td></tr><tr><td class="num">63</td><td>GOOGL</td><td>Alphabet Inc. (Class A)</td><td class="num">37.0</td><td class="num">294.2</td><td class="num">295.0</td><td class="num">-0.3%</td><td class="num">9.6%</td><td class="num">11.0%</td></tr><tr><td class="num">64</td><td>CPRT</td><td>Copart</td><td class="num">36.1</td><td class="num">29.1</td><td class="num">28.9</td><td class="num">6.9%</td><td class="num">-10.5%</td><td class="num">-11.8%</td></tr><tr><td class="num">65</td><td>GOOG</td><td>Alphabet Inc. (Class C)</td><td class="num">35.0</td><td class="num">291.7</td><td class="num">292.4</td><td class="num">-0.5%</td><td class="num">8.5%</td><td class="num">10.1%</td></tr><tr><td class="num">66</td><td>MAR</td><td>Marriott International</td><td class="num">34.0</td><td class="num">307.6</td><td class="num">304.9</td><td class="num">0.1%</td><td class="num">14.2%</td><td class="num">1.1%</td></tr><tr><td class="num">67</td><td>CMCSA</td><td>Comcast</td><td class="num">34.0</td><td class="num">23.0</td><td class="num">23.0</td><td class="num">2.6%</td><td class="num">0.6%</td><td class="num">-12.2%</td></tr><tr><td class="num">68</td><td>INTU</td><td>Intuit</td><td class="num">32.7</td><td class="num">313.7</td><td class="num">314.0</td><td class="num">6.2%</td><td class="num">-41.1%</td><td class="num">-11.1%</td></tr><tr><td class="num">69</td><td>AVGO</td><td>Broadcom</td><td class="num">32.1</td><td class="num">312.4</td><td class="num">315.2</td><td class="num">-6.2%</td><td class="num">6.4%</td><td class="num">15.9%</td></tr><tr><td class="num">70</td><td>ORLY</td><td>O&#39;Reilly Automotive</td><td class="num">31.6</td><td class="num">76.3</td><td class="num">76.2</td><td class="num">-2.1%</td><td class="num">-1.4%</td><td class="num">-3.8%</td></tr><tr><td class="num">71</td><td>ODFL</td><td>Old Dominion Freight Line</td><td class="num">31.2</td><td class="num">178.4</td><td class="num">176.7</td><td class="num">-2.1%</td><td class="num">30.0%</td><td class="num">1.1%</td></tr><tr><td class="num">72</td><td>XEL</td><td>Xcel Energy</td><td class="num">31.0</td><td class="num">65.4</td><td class="num">65.3</td><td class="num">-3.6%</td><td class="num">3.7%</td><td class="num">-6.2%</td></tr><tr><td class="num">73</td><td>MPWR</td><td>Monolithic Power Systems</td><td class="num">30.7</td><td class="num">1111.5</td><td class="num">1126.2</td><td class="num">-6.1%</td><td class="num">41.1%</td><td class="num">11.5%</td></tr><tr><td class="num">74</td><td>CRWV</td><td>CoreWeave</td><td class="num">27.5</td><td class="num">72.9</td><td class="num">75.2</td><td class="num">-16.5%</td><td class="num">10.8%</td><td class="num">-11.1%</td></tr><tr><td class="num">75</td><td>COST</td><td>Costco</td><td class="num">26.5</td><td class="num">815.8</td><td class="num">810.9</td><td class="num">-1.4%</td><td class="num">11.4%</td><td class="num">-5.0%</td></tr><tr><td class="num">76</td><td>EXC</td><td>Exelon</td><td class="num">26.4</td><td class="num">37.6</td><td class="num">37.5</td><td class="num">-4.5%</td><td class="num">1.5%</td><td class="num">-8.3%</td></tr><tr><td class="num">77</td><td>CEG</td><td>Constellation Energy</td><td class="num">25.2</td><td class="num">232.5</td><td class="num">233.5</td><td class="num">-3.3%</td><td class="num">-25.3%</td><td class="num">-12.5%</td></tr><tr><td class="num">78</td><td>AEP</td><td>American Electric Power</td><td class="num">23.2</td><td class="num">103.7</td><td class="num">103.5</td><td class="num">-3.7%</td><td class="num">6.0%</td><td class="num">-6.4%</td></tr><tr><td class="num">79</td><td>LIN</td><td>Linde plc</td><td class="num">23.2</td><td class="num">418.1</td><td class="num">417.2</td><td class="num">1.0%</td><td class="num">14.4%</td><td class="num">-2.0%</td></tr><tr><td class="num">80</td><td>IDXX</td><td>Idexx Laboratories</td><td class="num">23.0</td><td class="num">478.7</td><td class="num">476.5</td><td class="num">1.1%</td><td class="num">-16.9%</td><td class="num">-17.5%</td></tr><tr><td class="num">81</td><td>QCOM</td><td>Qualcomm</td><td class="num">22.6</td><td class="num">136.5</td><td class="num">137.5</td><td class="num">-3.0%</td><td class="num">-6.1%</td><td class="num">14.3%</td></tr><tr><td class="num">82</td><td>CDNS</td><td>Cadence Design Systems</td><td class="num">20.4</td><td class="num">269.2</td><td class="num">273.0</td><td class="num">-1.8%</td><td class="num">2.8%</td><td class="num">16.8%</td></tr><tr><td class="num">83</td><td>MCHP</td><td>Microchip Technology</td><td class="num">18.1</td><td class="num">64.0</td><td class="num">64.7</td><td class="num">-3.9%</td><td class="num">17.6%</td><td class="num">1.2%</td></tr><tr><td class="num">84</td><td>PDD</td><td>PDD Holdings</td><td class="num">18.1</td><td class="num">77.9</td><td class="num">75.6</td><td class="num">4.2%</td><td class="num">-23.6%</td><td class="num">-19.6%</td></tr><tr><td class="num">85</td><td>PEP</td><td>PepsiCo</td><td class="num">17.9</td><td class="num">124.1</td><td class="num">122.8</td><td class="num">1.9%</td><td class="num">2.9%</td><td class="num">-15.0%</td></tr><tr><td class="num">86</td><td>FER</td><td>Ferrovial</td><td class="num">17.6</td><td class="num">53.9</td><td class="num">53.8</td><td class="num">-2.0%</td><td class="num">-1.7%</td><td class="num">-19.9%</td></tr><tr><td class="num">87</td><td>HON</td><td>Honeywell Technologies</td><td class="num">16.4</td><td class="num">184.9</td><td class="num">184.7</td><td class="num">-7.7%</td><td class="num">6.2%</td><td class="num">-11.8%</td></tr><tr><td class="num">88</td><td>TMUS</td><td>T-Mobile US</td><td class="num">15.9</td><td class="num">157.1</td><td class="num">156.6</td><td class="num">0.2%</td><td class="num">-7.3%</td><td class="num">-15.8%</td></tr><tr><td class="num">89</td><td>NFLX</td><td>Netflix, Inc.</td><td class="num">14.6</td><td class="num">68.4</td><td class="num">68.1</td><td class="num">1.8%</td><td class="num">-12.5%</td><td class="num">-5.6%</td></tr><tr><td class="num">90</td><td>SNPS</td><td>Synopsys</td><td class="num">11.4</td><td class="num">338.3</td><td class="num">340.4</td><td class="num">-5.6%</td><td class="num">-17.2%</td><td class="num">9.1%</td></tr><tr><td class="num">91</td><td>WMT</td><td>Walmart</td><td class="num">11.2</td><td class="num">89.1</td><td class="num">88.7</td><td class="num">-9.8%</td><td class="num">-7.7%</td><td class="num">-17.2%</td></tr><tr><td class="num">92</td><td>TSLA</td><td>Tesla, Inc.</td><td class="num">9.9</td><td class="num">309.4</td><td class="num">310.5</td><td class="num">6.0%</td><td class="num">-17.2%</td><td class="num">-13.2%</td></tr><tr><td class="num">93</td><td>RKLB</td><td>Rocket Lab</td><td class="num">9.7</td><td class="num">61.0</td><td class="num">62.1</td><td class="num">-9.6%</td><td class="num">-4.5%</td><td class="num">-7.0%</td></tr><tr><td class="num">94</td><td>META</td><td>Meta Platforms</td><td class="num">8.4</td><td class="num">471.0</td><td class="num">470.5</td><td class="num">-6.8%</td><td class="num">-15.3%</td><td class="num">-12.9%</td></tr><tr><td class="num">95</td><td>NXPI</td><td>NXP Semiconductors</td><td class="num">8.4</td><td class="num">191.0</td><td class="num">193.0</td><td class="num">-3.9%</td><td class="num">2.8%</td><td class="num">-1.9%</td></tr><tr><td class="num">96</td><td>ISRG</td><td>Intuitive Surgical</td><td class="num">7.9</td><td class="num">324.7</td><td class="num">324.1</td><td class="num">-4.0%</td><td class="num">-32.6%</td><td class="num">-27.6%</td></tr><tr><td class="num">97</td><td>MSTR</td><td>MicroStrategy</td><td class="num">6.0</td><td class="num">104.3</td><td class="num">102.0</td><td class="num">28.2%</td><td class="num">-24.1%</td><td class="num">3.0%</td></tr><tr><td class="num">98</td><td>ALNY</td><td>Alnylam Pharmaceuticals</td><td class="num">3.2</td><td class="num">201.9</td><td class="num">202.1</td><td class="num">3.3%</td><td class="num">-41.0%</td><td class="num">-28.6%</td></tr><tr><td class="num">99</td><td>APP</td><td>AppLovin</td><td class="num">1.9</td><td class="num">260.7</td><td class="num">261.6</td><td class="num">-3.1%</td><td class="num">-50.5%</td><td class="num">-29.7%</td></tr></tbody></table></div>
+              </section>
+            </section>
+            
+
+  </div>
+</body>
+</html>
