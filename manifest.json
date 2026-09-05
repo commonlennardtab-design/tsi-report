@@ -1,14 +1,19 @@
 {
-  "generated_at": "2026-08-29 15:12:20",
+  "generated_at": "2026-09-05 19:32:56",
   "reports": [
     {
       "label": "Nasdaq 100",
       "region": "USA",
       "target_name": "ndq100.html",
-      "source_week": 36,
-      "source_date": "31.08.2026",
+      "source_week": 37,
+      "source_date": "07.09.2026",
       "archive_prefix": "ndq100",
       "archive_items": [
+        {
+          "file_name": "ndq100_KW_36_2026-08-31.html",
+          "week": 36,
+          "monday_date": "31.08.2026"
+        },
         {
           "file_name": "ndq100_KW_35_2026-08-24.html",
           "week": 35,
@@ -18,11 +23,6 @@
           "file_name": "ndq100_KW_34_2026-08-17__20260829_143859.html",
           "week": 34,
           "monday_date": "17.08.2026"
-        },
-        {
-          "file_name": "ndq100_KW_34_2026-08-17.html",
-          "week": 34,
-          "monday_date": "17.08.2026"
         }
       ]
     },
@@ -30,10 +30,15 @@
       "label": "S&P 500",
       "region": "USA",
       "target_name": "sp500.html",
-      "source_week": 36,
-      "source_date": "31.08.2026",
+      "source_week": 37,
+      "source_date": "07.09.2026",
       "archive_prefix": "sp500",
       "archive_items": [
+        {
+          "file_name": "sp500_KW_36_2026-08-31.html",
+          "week": 36,
+          "monday_date": "31.08.2026"
+        },
         {
           "file_name": "sp500_KW_35_2026-08-24.html",
           "week": 35,
@@ -43,11 +48,6 @@
           "file_name": "sp500_KW_34_2026-08-17.html",
           "week": 34,
           "monday_date": "17.08.2026"
-        },
-        {
-          "file_name": "sp500_KW_33_2026-08-10.html",
-          "week": 33,
-          "monday_date": "10.08.2026"
         }
       ]
     },
@@ -55,10 +55,15 @@
       "label": "Hdax",
       "region": "Deutschland",
       "target_name": "hdax.html",
-      "source_week": 36,
-      "source_date": "31.08.2026",
+      "source_week": 37,
+      "source_date": "07.09.2026",
       "archive_prefix": "hdax",
       "archive_items": [
+        {
+          "file_name": "hdax_KW_36_2026-08-31.html",
+          "week": 36,
+          "monday_date": "31.08.2026"
+        },
         {
           "file_name": "hdax_KW_35_2026-08-24.html",
           "week": 35,
@@ -66,11 +71,6 @@
         },
         {
           "file_name": "hdax_KW_34_2026-08-17__20260829_143859.html",
-          "week": 34,
-          "monday_date": "17.08.2026"
-        },
-        {
-          "file_name": "hdax_KW_34_2026-08-17.html",
           "week": 34,
           "monday_date": "17.08.2026"
         }
