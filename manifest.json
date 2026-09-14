@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-14 09:41:23",
+  "generated_at": "2026-09-14 10:20:32",
   "reports": [
     {
       "label": "Nasdaq 100",
@@ -60,6 +60,11 @@
       "archive_prefix": "hdax",
       "archive_items": [
         {
+          "file_name": "hdax_KW_37_2026-09-07__20260914_102032.html",
+          "week": 37,
+          "monday_date": "07.09.2026"
+        },
+        {
           "file_name": "hdax_KW_37_2026-09-07.html",
           "week": 37,
           "monday_date": "07.09.2026"
@@ -68,11 +73,6 @@
           "file_name": "hdax_KW_36_2026-08-31.html",
           "week": 36,
           "monday_date": "31.08.2026"
-        },
-        {
-          "file_name": "hdax_KW_35_2026-08-24.html",
-          "week": 35,
-          "monday_date": "24.08.2026"
         }
       ]
     }
