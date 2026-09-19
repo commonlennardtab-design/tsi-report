@@ -1,0 +1,701 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HDAX Wochenreport</title>
+  <style>
+    :root {
+      --ink: #10202F;
+      --ink-2: #17324D;
+      --ink-3: #3F5468;
+      --muted: #6A7A89;
+      --bg: #F3F5F7;
+      --card: #FFFFFF;
+      --line: #D9E0E7;
+      --line-2: #E8EDF2;
+      --soft: #F7F9FB;
+      --green-bg: #EEF6F0;
+      --green-text: #225A32;
+      --red-bg: #FAEEEF;
+      --red-text: #992E37;
+      --shadow: 0 10px 24px rgba(16, 32, 47, 0.05);
+      --radius: 16px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Inter, Aptos, Arial, sans-serif;
+      line-height: 1.45;
+    }
+
+    .topline {
+      height: 8px;
+      background: linear-gradient(90deg, #0F2233 0%, #17324D 60%, #4A5F73 100%);
+    }
+
+    .page {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .pdf-page {
+      margin-bottom: 18px;
+    }
+
+    .pdf-page.ranking-page {
+      break-before: page;
+      page-break-before: always;
+    }
+
+    .first-page-scale {
+      width: 100%;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 120px minmax(0, 1fr) 340px;
+      gap: 22px;
+      align-items: start;
+      padding: 18px 22px;
+      margin-bottom: 18px;
+    }
+
+    .brand-logo {
+      width: 108px;
+      height: auto;
+      display: block;
+      object-fit: contain;
+    }
+
+    .brand-fallback {
+      width: 108px;
+      height: 76px;
+      display: grid;
+      place-items: center;
+      background: var(--ink-2);
+      color: white;
+      font-size: 28px;
+      font-weight: 800;
+      border-radius: 10px;
+    }
+
+    .brand-caption {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--ink-3);
+      margin-bottom: 8px;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+
+    .hero-title {
+      font-size: 40px;
+      line-height: 1.02;
+      font-weight: 800;
+      color: var(--ink);
+      margin: 0 0 8px 0;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-sub {
+      color: var(--muted);
+      font-size: 15px;
+      margin: 0;
+      max-width: 820px;
+    }
+
+    .meta-box {
+      border-left: 1px solid var(--line);
+      padding-left: 18px;
+      display: grid;
+      gap: 10px;
+      align-self: start;
+      margin-top: 2px;
+    }
+
+    .meta-row {
+      display: grid;
+      grid-template-columns: 92px 1fr;
+      gap: 8px;
+      align-items: start;
+    }
+
+    .meta-key {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    .meta-val {
+      font-size: 14px;
+      color: var(--ink);
+      font-weight: 600;
+      word-break: break-word;
+    }
+
+    .eyebrow {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--muted);
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .section-title {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--ink);
+      margin: 0 0 14px 0;
+      letter-spacing: -0.02em;
+    }
+
+    .split-2-equal {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-bottom: 18px;
+      align-items: stretch;
+    }
+
+    .split-2-equal > .card,
+    .split-2-equal > .decision-panel-wrap {
+      height: 100%;
+    }
+
+    .split-2 {
+      display: grid;
+      grid-template-columns: 1.18fr 0.92fr;
+      gap: 18px;
+      margin-bottom: 18px;
+      align-items: stretch;
+    }
+
+    .split-2 > .card {
+      height: 100%;
+    }
+
+    .detail-section,
+    .decision-panel-wrap,
+    .perf-card {
+      padding: 18px 20px;
+      height: 100%;
+    }
+
+    .decision-panel-wrap {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .ranking-card {
+      break-inside: auto;
+      page-break-inside: auto;
+    }
+
+    .decision-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      flex: 1;
+      align-items: stretch;
+    }
+
+    .decision-panel {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 14px;
+      background: var(--soft);
+      height: 100%;
+    }
+
+    .decision-panel.buy { background: var(--green-bg); }
+    .decision-panel.sell { background: var(--red-bg); }
+
+    .decision-title {
+      font-size: 14px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .decision-panel.buy .decision-title { color: var(--green-text); }
+    .decision-panel.sell .decision-title { color: var(--red-text); }
+
+    .decision-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 12px;
+    }
+
+    .decision-item {
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .decision-item:last-child {
+      padding-bottom: 0;
+      border-bottom: 0;
+    }
+
+    .decision-main {
+      line-height: 1.35;
+    }
+
+    .decision-ticker {
+      font-weight: 800;
+    }
+
+    .decision-sep {
+      padding: 0 6px;
+      opacity: 0.7;
+    }
+
+    .decision-meta {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .pnl-meta {
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .decision-empty {
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .metric-card {
+      background: linear-gradient(180deg, #FFFFFF 0%, #FBFCFD 100%);
+      border: 1px solid var(--line);
+      border-top: 3px solid var(--ink-2);
+      border-radius: 12px;
+      padding: 15px 16px 14px 16px;
+      min-height: 106px;
+      box-shadow: 0 8px 18px rgba(16, 32, 47, 0.035);
+    }
+
+    .metric-card.good { border-top-color: #2F6F45; }
+    .metric-card.bad { border-top-color: #A03C45; }
+
+    .metric-label {
+      color: var(--muted);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .metric-value {
+      color: var(--ink);
+      font-size: 28px;
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: 8px;
+      letter-spacing: -0.02em;
+    }
+
+    .metric-sub {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .metric-footnote {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.35;
+    }
+
+    .detail-header {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 12px;
+    }
+
+    .detail-sub {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .report-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 620px;
+    }
+
+    .top-preview.report-table {
+      min-width: 0;
+      table-layout: fixed;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    .report-table thead {
+      display: table-header-group;
+    }
+
+    .report-table tbody tr {
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    .report-table thead th {
+      text-align: left;
+      padding: 10px 12px;
+      background: var(--ink-2);
+      color: white;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      border-bottom: 0;
+      white-space: nowrap;
+    }
+
+    .report-table tbody td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--line-2);
+      background: white;
+      font-size: 13px;
+      vertical-align: top;
+    }
+
+    .report-table tbody tr:nth-child(even) td {
+      background: #FBFCFD;
+    }
+
+    .report-table td.num {
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .chart-wrap {
+      margin-top: 8px;
+    }
+
+    .equity-chart {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .linechart-legend {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .legend-line {
+      width: 24px;
+      height: 0;
+      border-top: 3px solid var(--ink-2);
+      display: inline-block;
+      border-radius: 2px;
+    }
+
+    .legend-line.benchmark {
+      border-top-style: dashed;
+      border-top-color: #70859A;
+    }
+
+    .legend-line.portfolio {
+      border-top-color: var(--ink-2);
+    }
+
+    .grid-line {
+      stroke: #E5EBF0;
+      stroke-width: 1;
+    }
+
+    .axis-line {
+      stroke: #BFC9D2;
+      stroke-width: 1.2;
+    }
+
+    .axis-label {
+      font: 600 11px Inter, Aptos, Arial, sans-serif;
+      fill: var(--muted);
+    }
+
+    .portfolio-path {
+      fill: none;
+      stroke: var(--ink-2);
+      stroke-width: 3;
+      stroke-linejoin: round;
+      stroke-linecap: round;
+    }
+
+    .benchmark-path {
+      fill: none;
+      stroke: #70859A;
+      stroke-width: 2.4;
+      stroke-dasharray: 7 5;
+      stroke-linejoin: round;
+      stroke-linecap: round;
+    }
+
+    .empty-box {
+      background: #FBFCFD;
+      border: 1px dashed var(--line);
+      border-radius: 10px;
+      padding: 16px;
+      color: var(--muted);
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+    }
+
+    .badge-buy {
+      background: var(--green-bg);
+      color: var(--green-text);
+    }
+
+    .badge-sell {
+      background: var(--red-bg);
+      color: var(--red-text);
+    }
+
+    .badge-neutral {
+      background: #EEF2F6;
+      color: var(--ink-3);
+    }
+
+    .legal-disclaimer {
+      padding: 16px 20px;
+      margin-top: 18px;
+      border-left: 4px solid var(--ink-2);
+      background: #FBFCFD;
+    }
+
+    .legal-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--ink);
+      margin: 0 0 10px 0;
+      letter-spacing: -0.01em;
+    }
+
+    .legal-disclaimer p {
+      margin: 0 0 8px 0;
+      color: var(--ink-3);
+      font-size: 11px;
+      line-height: 1.45;
+    }
+
+    .legal-disclaimer p:last-child {
+      margin-bottom: 0;
+    }
+
+    @media (max-width: 1400px) {
+      .metrics-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 1220px) {
+      .hero {
+        grid-template-columns: 100px 1fr;
+      }
+
+      .meta-box {
+        grid-column: 1 / -1;
+        border-left: 0;
+        border-top: 1px solid var(--line);
+        padding-left: 0;
+        padding-top: 14px;
+        margin-top: 0;
+      }
+
+      .split-2,
+      .split-2-equal {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .page {
+        padding: 12px;
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .decision-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .metrics-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-title {
+        font-size: 31px;
+      }
+    }
+
+    @media print {
+      body { background: white; }
+      .page { max-width: none; padding: 0; }
+      .card, .metric-card { box-shadow: none; }
+      .topline { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="topline"></div>
+  <div class="page">
+
+    <section class="pdf-page first-page">
+      <div class="first-page-scale">
+
+        <section class="hero">
+          <div class="hero-left">
+            <div class="brand-fallback">TAB</div>
+          </div>
+
+          <div class="hero-mid">
+            <div class="brand-caption">TAB RESEARCH</div>
+            <h1 class="hero-title">HDAX Wochenreport</h1>
+            <p class="hero-sub">
+              Regelbasierter Trendstärke-Research mit Fokus auf Modellpositionen, Ranking-Veränderungen, Performance und Risiko.
+            </p>
+          </div>
+
+          <div class="meta-box">
+            <div class="meta-row">
+              <div class="meta-key">WOCHE</div>
+              <div class="meta-val">KW 38</div>
+            </div>
+            <div class="meta-row">
+              <div class="meta-key">ERSTELLT</div>
+              <div class="meta-val">14.09.2026</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="split-2-equal">
+          <div class="card detail-section">
+            <div class="detail-header">
+              <div>
+                <div class="eyebrow">Modellportfolio</div>
+                <h2 class="section-title" style="margin-bottom:0;">Top-5 Modellwerte</h2>
+              </div>
+              <div class="detail-sub">Kompakte Vorschau der führenden Werte nach Trendstärke-Modell.</div>
+            </div>
+            <div class="table-wrap"><table class="report-table top-preview"><thead><tr><th>Rang</th><th>Ticker</th><th>Name</th></tr></thead><tbody><tr><td class="num">1</td><td>AMV0.DE</td><td>AUMOVIO SE</td></tr><tr><td class="num">2</td><td>TKMS.DE</td><td>TKMS AG &amp; Co KGaA</td></tr><tr><td class="num">3</td><td>R3NK.DE</td><td>RENK Group AG</td></tr></tbody></table></div>
+          </div>
+
+          <div class="card decision-panel-wrap">
+            <div class="eyebrow">Modellsektion</div>
+            <h2 class="section-title">Ranking-Veränderungen dieser Woche</h2>
+            <div class="decision-grid">
+              <div class="decision-panel buy"><div class="decision-title">Neu im Top-5-Modell</div><ul class="decision-list"><li class="decision-item"><div class="decision-main"><span class="decision-ticker">AMV0.DE</span><span class="decision-sep">–</span><span class="decision-name">AUMOVIO SE</span></div><div class="decision-meta">Rang 67 → 1 • Trendstärke 99.8</div></li><li class="decision-item"><div class="decision-main"><span class="decision-ticker">R3NK.DE</span><span class="decision-sep">–</span><span class="decision-name">RENK Group AG</span></div><div class="decision-meta">Rang 88 → 3 • Trendstärke 98.0</div></li><li class="decision-item"><div class="decision-main"><span class="decision-ticker">TKMS.DE</span><span class="decision-sep">–</span><span class="decision-name">TKMS AG &amp; Co KGaA</span></div><div class="decision-meta">Rang 63 → 2 • Trendstärke 99.2</div></li></ul></div>
+              <div class="decision-panel sell"><div class="decision-title">Nicht mehr im Top-5-Modell</div><ul class="decision-list"><li class="decision-item"><div class="decision-main"><span class="decision-ticker">AOF.DE</span><span class="decision-sep">–</span><span class="decision-name">ATOSS Software SE</span></div><div class="decision-meta">Rang 5 → –</div></li><li class="decision-item"><div class="decision-main"><span class="decision-ticker">DHER.DE</span><span class="decision-sep">–</span><span class="decision-name">Delivery Hero SE</span></div><div class="decision-meta">Rang 4 → –</div></li><li class="decision-item"><div class="decision-main"><span class="decision-ticker">NA9.DE</span><span class="decision-sep">–</span><span class="decision-name">Nagarro SE</span></div><div class="decision-meta">Rang 1 → –</div></li><li class="decision-item"><div class="decision-main"><span class="decision-ticker">TKA.DE</span><span class="decision-sep">–</span><span class="decision-name">thyssenkrupp AG</span></div><div class="decision-meta">Rang 2 → –</div></li><li class="decision-item"><div class="decision-main"><span class="decision-ticker">TMV.DE</span><span class="decision-sep">–</span><span class="decision-name">TeamViewer SE</span></div><div class="decision-meta">Rang 3 → –</div></li></ul></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="metrics-grid">
+          <div class="metric-card bad"><div class="metric-label">Weekly Return</div><div class="metric-value">-2.8%</div><div class="metric-sub">aktuellste Modellwoche</div></div>
+          <div class="metric-card bad"><div class="metric-label">Relativ vs HDAX</div><div class="metric-value">-1.0%</div><div class="metric-sub">benchmark-relative Wochenentwicklung</div></div>
+          <div class="metric-card default"><div class="metric-label">Max Drawdown</div><div class="metric-value">-21.3%</div><div class="metric-sub">Seit Jahresbeginn</div></div>
+          <div class="metric-card default"><div class="metric-label">Sharpe</div><div class="metric-value">1.28</div><div class="metric-sub">annualisiert, Seit Jahresbeginn</div></div>
+          <div class="metric-card good"><div class="metric-label">YTD Return</div><div class="metric-value">26.5%</div><div class="metric-sub">Modell seit Jahresbeginn</div></div>
+        </section>
+
+        <section class="split-2">
+          <div class="card perf-card">
+            <div class="eyebrow">Performance(Seit Jahresbeginn)</div>
+            <h2 class="section-title">Trendstärke-Modell vs HDAX</h2>
+            <div class="chart-wrap">
+    <div class="linechart-legend"><div class="legend-item"><span class="legend-line portfolio"></span><span>Modell</span></div><div class="legend-item"><span class="legend-line benchmark"></span><span>Benchmark</span></div></div>
+    <svg viewBox="0 0 980 280" class="equity-chart" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Modell vs Benchmark">
+      <rect x="0" y="0" width="980" height="280" fill="white"></rect>
+      <line x1="60" y1="238.00" x2="954" y2="238.00" class="grid-line"></line><text x="50" y="242.00" text-anchor="end" class="axis-label">0.85x</text><line x1="60" y1="183.00" x2="954" y2="183.00" class="grid-line"></line><text x="50" y="187.00" text-anchor="end" class="axis-label">1.05x</text><line x1="60" y1="128.00" x2="954" y2="128.00" class="grid-line"></line><text x="50" y="132.00" text-anchor="end" class="axis-label">1.26x</text><line x1="60" y1="73.00" x2="954" y2="73.00" class="grid-line"></line><text x="50" y="77.00" text-anchor="end" class="axis-label">1.46x</text><line x1="60" y1="18.00" x2="954" y2="18.00" class="grid-line"></line><text x="50" y="22.00" text-anchor="end" class="axis-label">1.66x</text>
+      <line x1="60" y1="238" x2="954" y2="238" class="axis-line"></line>
+      <line x1="60" y1="18" x2="60" y2="238" class="axis-line"></line>
+      <path d="M 60.00,197.86 L 84.83,193.29 L 109.67,186.89 L 134.50,173.53 L 159.33,179.91 L 184.17,184.45 L 209.00,171.16 L 233.83,174.87 L 258.67,165.34 L 283.50,189.85 L 308.33,172.88 L 333.17,174.91 L 358.00,175.55 L 382.83,171.68 L 407.67,149.85 L 432.50,137.69 L 457.33,125.42 L 482.17,112.27 L 507.00,69.79 L 531.83,87.01 L 556.67,73.38 L 581.50,56.23 L 606.33,65.21 L 631.17,56.67 L 656.00,33.17 L 680.83,67.27 L 705.67,76.17 L 730.50,90.83 L 755.33,102.04 L 780.17,113.53 L 805.00,122.29 L 829.83,126.55 L 854.67,124.08 L 879.50,124.56 L 904.33,110.77 L 929.17,115.32 L 954.00,125.44" class="portfolio-path"></path>
+      <path d="M 60.00,197.86 L 84.83,189.81 L 109.67,189.41 L 134.50,193.83 L 159.33,197.87 L 184.17,195.83 L 209.00,193.67 L 233.83,189.82 L 258.67,189.55 L 283.50,208.44 L 308.33,210.04 L 333.17,221.94 L 358.00,222.83 L 382.83,213.15 L 407.67,206.06 L 432.50,196.05 L 457.33,202.44 L 482.17,200.62 L 507.00,200.10 L 531.83,204.43 L 556.67,193.97 L 581.50,191.56 L 606.33,195.41 L 631.17,196.79 L 656.00,192.88 L 680.83,196.39 L 705.67,184.03 L 730.50,191.98 L 755.33,194.61 L 780.17,191.62 L 805.00,185.71 L 829.83,178.01 L 854.67,176.66 L 879.50,180.05 L 904.33,175.22 L 929.17,181.05 L 954.00,186.38" class="benchmark-path"></path>
+      <text x="60.00" y="268" text-anchor="middle" class="axis-label">01/26</text><text x="358.00" y="268" text-anchor="middle" class="axis-label">03/26</text><text x="656.00" y="268" text-anchor="middle" class="axis-label">06/26</text><text x="954.00" y="268" text-anchor="middle" class="axis-label">09/26</text>
+    </svg>
+    </div>
+          </div>
+
+          <div class="card perf-card">
+            <div class="eyebrow">Kennzahlen</div>
+            <h2 class="section-title">Risk / Return Snapshot</h2>
+            <div class="table-wrap"><table class="report-table performance-table"><thead><tr><th>Kennzahl</th><th>Modell</th><th>HDAX</th></tr></thead><tbody><tr><td>Weekly Return</td><td>-2.8%</td><td>-1.8%</td></tr><tr><td>YTD Return</td><td>26.5%</td><td>4.2%</td></tr><tr><td>Max Drawdown*</td><td>-21.3%</td><td>-11.8%</td></tr><tr><td>Sharpe*</td><td>1.28</td><td>n/a</td></tr></tbody></table></div>
+            <div class="metric-footnote">* Max Drawdown und Sharpe beziehen sich ausschließlich auf den Zeitraum: Seit Jahresbeginn.</div>
+          </div>
+        </section>
+
+        <section class="card legal-disclaimer"><div class="eyebrow">Rechtlicher Hinweis</div><h2 class="legal-title">Wichtiger rechtlicher Hinweis</h2><p>Dieser Report dient ausschließlich allgemeinen Informations- und Researchzwecken. Er stellt keine Anlageberatung, keine Anlagevermittlung, keine Finanzportfolioverwaltung und keine individuelle Empfehlung zum Kauf, Verkauf oder Halten von Wertpapieren oder sonstigen Finanzinstrumenten dar.</p><p>Die dargestellten Inhalte basieren auf einem regelbasierten quantitativen Modell und sind nicht auf die persönliche finanzielle Situation, Risikotragfähigkeit, Anlageziele oder sonstige individuellen Umstände einzelner Empfänger zugeschnitten. Anlageentscheidungen erfolgen ausschließlich eigenverantwortlich.</p><p>Vergangene Wertentwicklungen, Backtests, Modellrechnungen und historische Kennzahlen sind kein verlässlicher Indikator für zukünftige Ergebnisse. Wertpapierinvestitionen sind mit Risiken verbunden, bis hin zum vollständigen Verlust des eingesetzten Kapitals.</p><p>Der Herausgeber kann in einzelnen im Report genannten Wertpapieren oder Finanzinstrumenten selbst investiert sein. Die Auswahl der Werte erfolgt nach dem beschriebenen regelbasierten Modell.</p></section>
+
+      </div>
+    </section>
+
+    
+            <section class="pdf-page ranking-page">
+              <section class="card detail-section ranking-card">
+                <div class="detail-header">
+                  <div>
+                    <div class="eyebrow">Breiteres Ranking</div>
+                    <h2 class="section-title" style="margin-bottom:0;">Vollständiges Ranking</h2>
+                  </div>
+                  <div class="detail-sub">Gesamtes aktuelles HDAX-Ranking zur Einordnung des Modellportfolios.</div>
+                </div>
+                <div class="table-wrap"><table class="report-table ranking-table"><thead><tr><th>Rang</th><th>Ticker</th><th>Name</th><th>Trendstärke</th><th>Montag Eröffnung</th><th>Referenzkurs</th><th>1W %</th><th>YTD %</th><th>6M %</th></tr></thead><tbody><tr><td class="num">1</td><td>AMV0.DE</td><td>AUMOVIO SE</td><td class="num">99.8</td><td class="num">37.5</td><td class="num">37.8</td><td class="num">0.4%</td><td class="num">-15.2%</td><td class="num">3.0%</td></tr><tr><td class="num">2</td><td>TKMS.DE</td><td>TKMS AG &amp; Co KGaA</td><td class="num">99.2</td><td class="num">82.7</td><td class="num">83.2</td><td class="num">0.0%</td><td class="num">19.9%</td><td class="num">-4.9%</td></tr><tr><td class="num">3</td><td>R3NK.DE</td><td>RENK Group AG</td><td class="num">98.0</td><td class="num">42.0</td><td class="num">41.7</td><td class="num">-3.3%</td><td class="num">-24.0%</td><td class="num">-24.4%</td></tr></tbody></table></div>
+              </section>
+            </section>
+            
+
+  </div>
+</body>
+</html>
